@@ -35,9 +35,14 @@ export const registerUser = async (req, res) => {
     };
     res.status(200).send(resUser);
   } catch (err) {
-    console.log(err);
+    console.log("[ERROR IN SAVING DATA]", err);
     if (err.code == 11000)
-      return res.status(400).send({ message: "[USER EXISTS]" });
+      if (err.keyPattern["email"] !== undefined)
+        return res.status(400).send({ message: "[USER EXISTS]", on: "email" });
+      else if (err.keyPattern["username"] !== undefined)
+        return res
+          .status(400)
+          .send({ message: "[USER EXISTS]", on: "username" });
     return res.status(500).send({ message: "[SERVER ERROR]", err });
   }
 };
