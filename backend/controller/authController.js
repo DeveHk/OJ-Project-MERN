@@ -50,14 +50,14 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     //1. Check all parameters there
-    const { email, password, username } = req.body;
-    if (!(email || username) || !password) {
+    const { password, username } = req.body;
+    if (!username || !password) {
       return res.status(400).send("[Some Info Missing]");
     }
 
     //2. Check if User is there
     const user = await User.findOne({
-      $or: [{ email: email }, { username: username }],
+      $or: [{ email: username }, { username: username }],
     });
     if (!user) {
       return res.status(404).send("NO USER FOUND");
@@ -88,6 +88,7 @@ export const loginUser = async (req, res) => {
     const option = {
       expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       httpOnly: true,
+      sameSite: "strict",
     };
     res.status(200).cookie("token", token, option).json(resUser);
   } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -33,7 +33,8 @@ const RegisterFrom = () => {
   const { toast } = useToast();
   const [showp, setShowp] = useState(false);
   const [showc, setShowc] = useState(false);
-
+  const [valid, setValid] = useState(false);
+  const navigate = useNavigate();
   const formSchema = z
     .object({
       lname: z
@@ -80,7 +81,7 @@ const RegisterFrom = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    form;
+    setValid(true);
     try {
       const response = await axios.post(
         "http://localhost:5000/auth/register",
@@ -91,6 +92,8 @@ const RegisterFrom = () => {
         title: "User Registered",
         description: "You will be redirected to Login page",
       });
+      navigate("/login");
+      return;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status == 400) {
@@ -106,6 +109,7 @@ const RegisterFrom = () => {
             });
           }
         }
+        setValid(false);
       } else {
         console.error("Unexpected error:", error);
       }
@@ -303,7 +307,19 @@ const RegisterFrom = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+
+          <div className="w-full flex-col items-center flex justify-center">
+            <Button disabled={valid} type="submit" className="w-full">
+              Submit
+            </Button>
+            <div className="w-full text-sm text-right mt-2">
+              Already have an account?{" "}
+              <a className="text-blue-600 italic" href="/login">
+                {" "}
+                Login
+              </a>
+            </div>
+          </div>
         </form>
       </Form>
     </div>

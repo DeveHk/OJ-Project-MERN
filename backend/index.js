@@ -6,8 +6,12 @@ import testRouter from "./routes/test.js";
 import cors from "cors";
 const app = express();
 DBConnection();
-
-app.use(cors("*"));
+app.use(
+  cors({
+    origin: process.env.CLIENT, // your frontend URL
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

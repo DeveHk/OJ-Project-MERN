@@ -1,5 +1,5 @@
-import RegisterFrom from "@/components/Authentication/RegisterFrom";
-import RegisterHeader from "@/components/Authentication/RegisterHeader";
+import RegisterFrom from "@/components/AuthenticationPages/RegisterFrom";
+import RegisterHeader from "@/components/AuthenticationPages/RegisterHeader";
 import Footer from "@/components/Commons/Footer";
 import Navbar from "@/components/Commons/Navbar";
 

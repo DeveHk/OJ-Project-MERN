@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { SVGProps } from "react";
+import Cookies from "js-cookie";
+
 const Landing = () => {
+  useEffect(() => {
+    const token = Cookies.get("token");
+    console.log(token);
+  });
   return (
     <main>
       <section className="bg-gray-900 py-20 md:py-32">
