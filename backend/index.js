@@ -3,6 +3,7 @@ import DBConnection from "./database/db.js";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRouter.js";
 import testRouter from "./routes/test.js";
+import problemRouter from "./routes/problemRouter.js";
 import cors from "cors";
 const app = express();
 DBConnection();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/auth", authRouter);
+app.use("/problem", problemRouter);
 app.use("/", testRouter);
 
 app.listen(process.env.PORT, () => {

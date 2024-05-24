@@ -1,3 +1,9 @@
+.markdown > * {
+  all: revert;
+}
+textarea {
+  resize: none;
+}
 @tailwind base;
   @tailwind components;
   @tailwind utilities;

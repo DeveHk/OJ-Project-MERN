@@ -56,43 +56,118 @@ export const loginUser = async (req, res) => {
     }
 
     //2. Check if User is there
-    const user = await User.findOne({
+    const userdata = await User.findOne({
       $or: [{ email: username }, { username: username }],
     });
-    if (!user) {
+    if (!userdata) {
       return res.status(404).send("NO USER FOUND");
     }
     //3. Check if Password valid is there
     const key = await Auth.findOne({
-      u_id: user._id,
+      u_id: userdata._id,
     });
     const validPassword = await bcrypt.compare(password, key.password);
     if (!validPassword) {
       return res.status(404).send("WRONG PASSWORD");
     }
 
-    //4. Generatet JWT and send to user
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.SECRET_KEY,
+    //4. Generatet JWT acceess refreash and send to user
+    const accesstoken = jwt.sign(
+      { userdata },
+      process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "1h", //"1h",
       }
     );
+    const refreshToken = jwt.sign(
+      { id: userdata._id, role: userdata.isAdmin },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+
     const resUser = {
       message: "User Logged In",
-      user: user._doc,
-      token,
+      user: userdata._doc,
+      accesstoken,
+      refreshToken,
     };
-
-    const option = {
-      expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+    //5.creating cokie for response
+    const accessTokenOptions = {
+      expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1 hour
       httpOnly: true,
       sameSite: "strict",
     };
-    res.status(200).cookie("token", token, option).json(resUser);
+
+    const refreshTokenOptions = {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+      httpOnly: true,
+      sameSite: "strict",
+    };
+    res
+      .status(200)
+      .cookie("accessToken", accesstoken, accessTokenOptions)
+      .cookie("refreshToken", refreshToken, refreshTokenOptions)
+      .json(resUser);
   } catch (err) {
     console.log(err);
     return res.status(500).send({ message: "[SERVER ERROR]", err });
+  }
+};
+
+export const refreash = async (req, res) => {
+  try {
+    //1. Take token
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return res
+        .status(401)
+        .send({ isAuthenticated: false, message: "Refresh token missing" });
+    }
+    //2. Verify token
+    jwt.verify(token, process.env.SECRET_KEY, async (err, user) => {
+      if (err) {
+        return res
+          .status(403)
+          .send({ isAuthenticated: false, message: "Invalid refresh token" });
+      }
+      //3. Generate and send new token
+      const storedUser = await User.findById(user.id);
+      const newAccessToken = jwt.sign(
+        { storedUser },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "1h" }
+      );
+      const accessTokenOptions = {
+        expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1 hour
+        httpOnly: true,
+        sameSite: "strict",
+      };
+      res.cookie("accessToken", newAccessToken, accessTokenOptions).json({
+        message: "Access token refreshed",
+        accessToken: newAccessToken,
+      });
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "[SERVER ERROR]", err });
+  }
+};
+
+export const isLogin = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (refreshToken) {
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      async (err, user) => {
+        if (err) {
+          return res.json({ isAuthenticated: false, err });
+        }
+        console.log(user);
+        return res.json({ isAuthenticated: true, user });
+      }
+    );
+  } else {
+    res.json({ isAuthenticated: false });
   }
 };

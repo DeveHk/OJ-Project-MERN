@@ -101,7 +101,7 @@ const LoginFrom = () => {
                   <Input
                     className="rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50 dark:focus:border-gray-50 dark:focus:ring-gray-50"
                     id="username"
-                    placeholder="johndoe"
+                    placeholder="harsh"
                     required
                     {...field}
                   />
