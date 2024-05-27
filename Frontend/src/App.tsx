@@ -7,12 +7,14 @@ import Login from "./pages/Login";
 import ProtectedRoutes from "./components/RouteGuards/ProtectedRoute";
 import DashboardRoute from "./components/RouteGuards/DashboardRoute";
 import Problems from "./pages/Problems";
+import Problem from "./pages/Problem";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/problems/:problemId" element={<Problem />} />
         <Route path="/problems" element={<Problems />} />
         <Route element={<ProtectedRoutes type="protected" />}>
           <Route path="/register" element={<Register />} />

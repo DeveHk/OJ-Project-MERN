@@ -7,7 +7,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 const DashboardRoute = () => {
   const [mounted, setMounted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  // const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -33,12 +33,11 @@ const DashboardRoute = () => {
   }, []);
 
   if (!mounted) return null;
-  {
-    /*
+
   if (!isAuth) {
     return <Navigate to="/login" />;
-  }*/
   }
+
   return (
     <Routes>
       {isAdmin ? (
