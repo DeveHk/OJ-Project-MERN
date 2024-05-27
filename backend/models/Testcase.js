@@ -19,7 +19,7 @@ const testcaseSchema = new mongoose.Schema(
       required: true,
     },
     visible: {
-      type: String,
+      type: Boolean,
       default: null,
       required: true,
     },

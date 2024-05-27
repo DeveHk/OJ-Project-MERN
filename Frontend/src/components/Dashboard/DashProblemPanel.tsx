@@ -7,16 +7,33 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
+import { RiArchive2Line, RiInboxUnarchiveLine } from "react-icons/ri";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FiDelete } from "react-icons/fi";
+import { FiArchive, FiDelete } from "react-icons/fi";
 import axios from "axios";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
-const DashProblemPanel = () => {
-  const [problems, setProblems] = useState(["", "", "", ""]);
+interface Problem {
+  _id: string;
+  u_id: string;
+  title: string;
+  difficulty: string;
+  description: string;
+  testcasecount: number;
+  active: boolean;
+}
+const DashProblemPanel = ({
+  setEditproblem,
+  setActive,
+}: {
+  setActive: React.Dispatch<React.SetStateAction<string>>;
+  setEditproblem: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
+  const [problems, setProblems] = useState<Problem[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const apicall = async () => {
     try {
       const res = await axios.get("http://localhost:5000/problem/read", {
@@ -29,8 +46,29 @@ const DashProblemPanel = () => {
       console.log(err);
     }
   };
+  const disableProblemApiCall = async (problemId: string) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `http://localhost:5000/problem/disable/${problemId}`,
+        {}, // Put requests need a body, even if empty
+        {
+          withCredentials: true,
+        }
+      );
+      const newProblems = problems.map((problem) =>
+        problem._id === problemId ? res.data.problems : problem
+      );
+      console.log(newProblems, res);
+      setProblems(newProblems);
+      console.log(res);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    if (problems[0] == "") apicall();
+    if (problems.length == 0) apicall();
   }, []);
   return (
     <div className="flex flex-col">
@@ -93,17 +131,35 @@ const DashProblemPanel = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Button size="sm" variant="outline">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setActive("edit");
+                          setEditproblem(problem._id);
+                        }}
+                      >
                         <FiDelete className="h-4 w-4" />
                         Edit
                       </Button>
                       <Button
-                        className="text-red-500"
+                        className={cn(
+                          problem.active ? "text-red-500" : "text-green-500"
+                        )}
                         size="sm"
+                        onClick={() => {
+                          disableProblemApiCall(problem._id);
+                        }}
+                        disabled={loading}
                         variant="outline"
                       >
-                        <FiDelete className="h-4 w-4" />
-                        Disable
+                        {problem.active ? (
+                          <RiArchive2Line className="h-4 w-4" />
+                        ) : (
+                          <RiInboxUnarchiveLine className="h-4 w-4" />
+                        )}
+
+                        {problem.active ? "Disable" : "Enable"}
                       </Button>
                     </div>
                   </TableCell>

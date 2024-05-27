@@ -62,6 +62,19 @@ const DashnavAdmin = ({
               <MdAddCircleOutline className="h-4 w-4" />
               Create Problem
             </a>
+            <a
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900  dark:hover:text-gray-50",
+                active == "edit"
+                  ? " bg-gray-100 text-gray-900  dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+                  : "  text-gray-500 dark:text-gray-400 dark:hover:text-gray-50"
+              )}
+              onClick={() => setActive("edit")}
+              href="#"
+            >
+              <MdAddCircleOutline className="h-4 w-4" />
+              Edit Problem
+            </a>
           </nav>
         </div>
       </div>

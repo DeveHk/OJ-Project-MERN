@@ -171,3 +171,16 @@ export const isLogin = async (req, res) => {
     res.json({ isAuthenticated: false });
   }
 };
+
+export const logoutUser = (req, res) => {
+  try {
+    // Clear the access token and refresh token cookies
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
+    console.error("Error logging out:", err);
+    return res.status(500).json({ message: "Server error", error: err });
+  }
+};

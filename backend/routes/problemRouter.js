@@ -1,6 +1,12 @@
 import express from "express";
 import { loginUser, refreash, isLogin } from "../controller/authController.js";
-import { createproblem, readProblem } from "../controller/problemController.js";
+import {
+  createproblem,
+  disableproblem,
+  readProblem,
+  readProblemall,
+  updateproblem,
+} from "../controller/problemController.js";
 import {
   authorizationAdmin,
   authorizationJWT,
@@ -8,7 +14,19 @@ import {
 const router = express.Router();
 
 router.post("/create", authorizationJWT, authorizationAdmin, createproblem);
-router.get("/read", authorizationJWT, authorizationAdmin, readProblem);
-router.post("/update", isLogin);
-router.get("/delete", refreash);
+router.get("/read", authorizationJWT, authorizationAdmin, readProblemall);
+router.get("/read/:problemId", authorizationJWT, readProblem);
+router.put(
+  "/disable/:problemId",
+  authorizationJWT,
+  authorizationAdmin,
+  disableproblem
+);
+router.put(
+  "/update/:problemId",
+  authorizationJWT,
+  authorizationAdmin,
+  updateproblem
+);
+
 export default router;
