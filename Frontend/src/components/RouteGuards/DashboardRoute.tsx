@@ -34,9 +34,9 @@ const DashboardRoute = () => {
 
   if (!mounted) return null;
 
-  if (!isAuth) {
+  /* if (!isAuth) {
     return <Navigate to="/login" />;
-  }
+  }*/
 
   return (
     <Routes>

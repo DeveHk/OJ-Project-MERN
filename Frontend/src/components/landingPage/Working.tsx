@@ -17,7 +17,8 @@ const Working = () => {
               excel in your coding journey.
             </p>
           </div>
-          <div className="mx-auto border-t-2 grid max-w-5xl  gap-6 py-6 lg:grid-cols-2 lg:gap-12">
+          <div className="mx-auto border-t-2 grid lg:max-w-[600px]  gap-6 py-6 ">
+            {/* lg:grid-cols-2 lg:gap-12*/}
             <div className="flex flex-1 flex-col gap-4 lg:p-8">
               <h3 className="text-xl sm:text-2xl dark:text-white text-blacktracking-wider md:text-3xl xl:text-4xl/none">
                 Best Problmes
@@ -42,7 +43,8 @@ const Working = () => {
               </div>
   </div>*/}
           </div>
-          <div className="mx-auto border-t-2 grid max-w-5xl  gap-6 py-6 lg:grid-cols-2 lg:gap-12">
+          <div className="mx-auto border-t-2 grid lg:max-w-[600px] gap-6 py-6">
+            {/** lg:grid-cols-2 lg:gap-12 */}
             <div className="flex flex-1 flex-col gap-4 lg:p-8">
               <h3 className="text-xl sm:text-2xl dark:text-white text-blacktracking-wider md:text-3xl xl:text-4xl/none">
                 Coding Challenges

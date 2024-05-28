@@ -5,25 +5,36 @@ import { useState, useEffect } from "react";
 import { apicall } from "@/api/problemUser";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-const ProblemPage = ({ problemId }: { problemId: string | null }) => {
+type TestCase = {
+  testin: string;
+  testout: string;
+};
+export default function ProblemSinglePage({
+  problemId,
+}: {
+  problemId: string | null;
+}) {
   const [problem, setProblem] = useState<Problem | null>(null);
-  const [testcase, setTestcase] = useState([""]);
+  const [testcase, setTestcase] = useState<TestCase[]>([]);
+  const [inputValue, setInputValue] = useState("");
+  const [resultValue, setResultValue] = useState("");
 
-  const [mounted, setMounted] = useState([""]);
-  const getData = async () => {
-    const res = await apicall(problemId);
-    if (res && res?.status == 200) {
-      setProblem(res.data.problem);
-      console.log(res.data.testcases);
-      setTestcase(res.data.testcases);
-    }
-    console.log(testcase);
-  };
   useEffect(() => {
-    if (problem == null) getData();
-  }, []);
+    const getData = async () => {
+      if (problemId) {
+        const res = await apicall(problemId);
+        if (res && res.status === 200) {
+          setProblem(res.data.problem);
+          setTestcase(res.data.testcases || []);
+        }
+      }
+    };
+
+    getData();
+  }, [problemId]);
+
   return (
-    <div className="grid  lg:grid-cols-[500px_1fr] md:grid-cols-[300px_1fr] gap-6 w-full lg:px-5 mx-auto py-8 ">
+    <div className="grid lg:grid-cols-[500px_1fr] md:grid-cols-[300px_1fr] gap-6 w-full lg:px-5 mx-auto py-8">
       <div className="space-y-6">
         <div className="bg-white rounded-lg shadow-md dark:bg-gray-950">
           <div className="p-6 space-y-4">
@@ -37,33 +48,37 @@ const ProblemPage = ({ problemId }: { problemId: string | null }) => {
               </div>
             </div>
             <p className="text-gray-600 dark:text-gray-400">
-              <Markdown className={"markdown"} remarkPlugins={[remarkGfm]}>
-                {problem?.description}
+              <Markdown className="markdown" remarkPlugins={[remarkGfm]}>
+                {problem?.description || ""}
               </Markdown>
             </p>
-            <div className="space-y-2">
-              <h3 className="text-lg font-semibold">Test Cases</h3>
-              <div className="space-y-1">
-                {testcase.length > 0 &&
-                  testcase.map((test, i) => (
-                    <div
-                      key={i}
-                      className="bg-gray-100 px-4 py-2 rounded-md text-sm font-mono dark:bg-gray-800"
-                    >
-                      <span className="text-gray-500 dark:text-gray-400">
-                        Input:
-                      </span>
-                      <div className="whitespace-pre-line">{test?.testin}</div>
-                      <br />
-                      <span className="text-gray-500 dark:text-gray-400">
-                        Output:
-                      </span>
-                      <div className="whitespace-pre-line">{test?.testout}</div>
-                      <br />
-                    </div>
-                  ))}
+            {testcase.length > 0 && (
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold">Test Cases</h3>
+                <div className="space-y-1">
+                  {testcase.length > 0 &&
+                    testcase.map((test, i) => (
+                      <div
+                        key={`${test.testin}-${i}`}
+                        className="bg-gray-100 px-4 py-2 rounded-md text-sm font-mono dark:bg-gray-800"
+                      >
+                        <span className="text-gray-500 dark:text-gray-400">
+                          Input:
+                        </span>
+                        <div className="whitespace-pre-line">{test.testin}</div>
+                        <br />
+                        <span className="text-gray-500 dark:text-gray-400">
+                          Output:
+                        </span>
+                        <div className="whitespace-pre-line">
+                          {test.testout}
+                        </div>
+                        <br />
+                      </div>
+                    ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -82,6 +97,8 @@ const ProblemPage = ({ problemId }: { problemId: string | null }) => {
                 id="input"
                 placeholder="Enter your input here..."
                 rows={4}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -97,13 +114,20 @@ const ProblemPage = ({ problemId }: { problemId: string | null }) => {
                 placeholder="Your result will be displayed here..."
                 readOnly
                 rows={4}
+                value={resultValue}
               />
             </div>
           </div>
-          <Button className="w-full">Run Code</Button>
+          <Button
+            className="w-full"
+            onClick={() => {
+              /* Run Code Logic */
+            }}
+          >
+            Run Code
+          </Button>
         </div>
       </div>
     </div>
   );
-};
-export default ProblemPage;
+}
