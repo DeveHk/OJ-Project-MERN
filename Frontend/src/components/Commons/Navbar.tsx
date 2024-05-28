@@ -8,6 +8,7 @@ import {
 import useAuth from "../hooks/Auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaCode } from "react-icons/fa";
 export default function Navbar() {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -29,7 +30,7 @@ export default function Navbar() {
     <header className="sticky top-0 flex  py-2 w-full shrink-0 bg-white/40 dark:bg-black/40 backdrop-blur-[15px] items-center px-4 md:px-6">
       <div className="w-full flex justify-between ">
         <a className=" " href="/">
-          <MountainIcon className="h-6 w-6" />
+          <FaCode className="h-6 w-6" />
           <span className="sr-only">Acme Inc</span>
         </a>
         <NavigationMenu className="hidden  lg:flex">
@@ -94,7 +95,11 @@ export default function Navbar() {
         )}
         <Sheet>
           <SheetTrigger asChild>
-            <Button className="lg:hidden h-6" size="icon" variant="outline">
+            <Button
+              className="lg:hidden h-full flex justify-center items-center"
+              size="icon"
+              variant="outline"
+            >
               <MenuIcon className="h-4 w-4" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
