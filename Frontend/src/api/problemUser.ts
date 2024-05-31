@@ -16,7 +16,8 @@ export interface ApiResponse {
     data: {
         success: boolean;
         message: string;
-        problems: Problem[]; // Use the interface defined for the problem object
+        problems: Problem[];
+        testcases: Problem[] // Use the interface defined for the problem object
     };
     status: number;
     statusText: string;

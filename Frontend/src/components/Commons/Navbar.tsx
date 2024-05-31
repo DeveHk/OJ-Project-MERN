@@ -27,7 +27,7 @@ export default function Navbar() {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return null;
   return (
-    <header className="sticky top-0 flex  py-2 w-full shrink-0 bg-white/40 dark:bg-black/40 backdrop-blur-[15px] items-center px-4 md:px-6">
+    <header className="sticky z-10 top-0 flex  py-2 w-full shrink-0 bg-white/40 dark:bg-black/40 backdrop-blur-[15px] items-center px-4 md:px-6">
       <div className="w-full flex justify-between ">
         <a className=" " href="/">
           <FaCode className="h-6 w-6" />
@@ -95,11 +95,7 @@ export default function Navbar() {
         )}
         <Sheet>
           <SheetTrigger asChild>
-            <Button
-              className="lg:hidden h-full flex justify-center items-center"
-              size="icon"
-              variant="outline"
-            >
+            <Button className="lg:hidden h-6" size="icon" variant="outline">
               <MenuIcon className="h-4 w-4" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
