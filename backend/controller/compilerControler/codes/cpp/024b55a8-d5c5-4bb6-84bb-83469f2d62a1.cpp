@@ -1,0 +1,1 @@
+function processInput(input) { let [a, b] = input.split(' '); console.log('string is', a, b); }

@@ -5,6 +5,7 @@ import authRouter from "./routes/authRouter.js";
 import testRouter from "./routes/test.js";
 import problemRouter from "./routes/problemRouter.js";
 import problemUserRouter from "./routes/problemUserRounter.js";
+import compilerRouter from "./routes/compilerRoutes.js";
 import cors from "cors";
 const app = express();
 DBConnection();
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use("/auth", authRouter);
 app.use("/problem", problemRouter);
 app.use("/question", problemUserRouter);
+app.use("/compiler", compilerRouter);
 app.use("/", testRouter);
 
 app.listen(process.env.PORT, () => {

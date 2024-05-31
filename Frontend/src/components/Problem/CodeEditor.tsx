@@ -11,7 +11,7 @@ import "prismjs/themes/prism.css";
 const initialcode = (lang: string) => {
   switch (lang) {
     case "cpp":
-      return `#include <bits/sdtc++.h>
+      return `#include <bits/stdc++.h>
 using namespace std;
 int main() {
     // Your code logic here
