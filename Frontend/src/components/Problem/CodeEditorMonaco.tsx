@@ -73,7 +73,7 @@ const CodeEditor = ({
   return (
     <Editor
       className="h-full w-full bg-gray-200  rounded-lg overflow-hidden"
-      height={400}
+      height={300}
       theme={theme}
       language={lang}
       value={code}
