@@ -1,6 +1,7 @@
 import Submission from "../../models/Submission.js";
 import Testcase from "../../models/Testcase.js";
-import { execute, executeCheck, generateFile } from "./Functions.js";
+import { generateFile } from "./CompilerFunctions.js";
+import { executeCheck } from "./SubmissionFunctions.js";
 export const submission = async (req, res) => {
   const user_id = req.user._id;
   const { prob_id, lang = "cpp", code } = req.body;
@@ -9,9 +10,10 @@ export const submission = async (req, res) => {
       .status(400)
       .send({ success: false, message: "[Code is Missing]" });
   }
-  const filepath = generateFile(lang, code);
-  const testcases = await Testcase.find({ problem_id: prob_id });
 
+  const filepath = generateFile(lang, code);
+
+  const testcases = await Testcase.find({ problem_id: prob_id });
   console.log(filepath, "[INTPUJT]:", testcases);
   try {
     const exeTime = await executeCheck(filepath, lang, testcases);

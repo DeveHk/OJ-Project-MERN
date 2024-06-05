@@ -13,7 +13,7 @@ export interface SolutionSubmit {
 
 const apicallcompile = async (data: SolutionRun) => {
     const res = await axios.post(
-        "http://localhost:2000/compiler/run", data, {
+        `http://localhost:8000/compiler/run`, data, {
         withCredentials: true
     }
     );
@@ -22,7 +22,7 @@ const apicallcompile = async (data: SolutionRun) => {
 
 const apicallsubmit = async (data: SolutionSubmit) => {
     const res = await axios.post(
-        "http://localhost:2000/compiler/submit", data, {
+        `http://localhost:8000/compiler/submit`, data, {
         withCredentials: true
     }
     );

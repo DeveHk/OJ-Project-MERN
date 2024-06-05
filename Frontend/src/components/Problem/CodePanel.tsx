@@ -1,27 +1,33 @@
 import React, { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import CodeEditor from "./CodeEditor";
+import CodeEditor from "./CodeEditorMonaco";
 import { LangSelect } from "./LangSelect";
 import { useToast } from "../ui/use-toast";
 import { apicallcompile, apicallsubmit } from "@/api/compilation";
 import { FcProcess } from "react-icons/fc";
 import { useNavigate, useParams } from "react-router-dom";
+import { ThemeSelect } from "./ThemeSelect";
+import { MultiTab } from "./MultiTab";
 const CodePanel = () => {
   const { problemId } = useParams();
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [lang, setLang] = useState<string>("cpp");
+  const [theme, setTheme] = useState<string>("vs");
   const [code, setCode] = useState<string>("");
   const [error, setError] = useState<string | null>("");
   const [output, setOutput] = useState("");
   const [loading, setloading] = useState<boolean>(false);
   const [running, setRunning] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [val, setVal] = useState<string>("input");
+
   const { toast } = useToast();
   const onRun = async () => {
     setRunning(true);
     setloading(true);
+    setError("");
     const data = {
       lang,
       code,
@@ -30,6 +36,7 @@ const CodePanel = () => {
     try {
       const res = await apicallcompile(data);
       setOutput(res?.data?.output[0]);
+      setVal("output");
       console.log("[successfull]", res), output;
       setError("");
     } catch (err) {
@@ -49,10 +56,16 @@ const CodePanel = () => {
         }
       }
       let _error = String(err);
-      if (data.lang == "cpp" || data.lang == "c")
+      if (
+        data.lang == "py" ||
+        data.lang == "python" ||
+        data.lang == "cpp" ||
+        data.lang == "c" ||
+        data.lang == "java"
+      )
         _error = err?.response?.data.error.formattedErrors.join("\n");
-      else if (data.lang == "python") _error = err?.response?.data.error.error;
       setError(_error);
+      setVal("console");
       setOutput("");
     } finally {
       setloading(false);
@@ -63,12 +76,14 @@ const CodePanel = () => {
   const onSubmit = async () => {
     setSubmitting(true);
     setloading(true);
+    setError("");
     const data = {
       lang,
       code,
       prob_id: problemId || " ",
     };
     try {
+      setVal("console");
       const res = await apicallsubmit(data);
       console.log("[Successfull]", res);
       /*setOutput(res?.data?.output[0]);
@@ -80,7 +95,6 @@ const CodePanel = () => {
       });
     } catch (err) {
       console.log("[Unsuccessfull]", err);
-
       if (err?.response.status == 403) {
         if (err?.response.data.isAuthenticated == true) {
           toast({
@@ -94,8 +108,21 @@ const CodePanel = () => {
           });
           navigate("/login");
         }
+      } else if (err?.response.status == 400) {
+        let _error = String(err);
+        if (
+          data.lang == "py" ||
+          data.lang == "python" ||
+          data.lang == "cpp" ||
+          data.lang == "c" ||
+          data.lang == "java"
+        )
+          _error = err?.response?.data.error.formattedErrors.join("\n");
+        setError(_error);
+        setOutput("");
+      } else {
+        setError(err?.response.data.error.error);
       }
-      setError(err?.response.data.error.error);
       setOutput("");
     } finally {
       setloading(false);
@@ -104,8 +131,8 @@ const CodePanel = () => {
     console.log(data);
   };
   return (
-    <div className="md:h-[90vh] py-3 overflow-y-scroll no-scrollbar bg-white rounded-lg shadow-md dark:bg-gray-950">
-      <div className="p-6 space-y-6">
+    <div className="md:h-[90vh] md:py-0 py-2 overflow-y-scroll no-scrollbar bg-white rounded-lg shadow-md dark:bg-gray-950">
+      <div className="p-6 space-y-5">
         <div className="grid gap-4">
           <div className="space-y-2">
             <div className="flex space-x-5 items-center">
@@ -115,76 +142,42 @@ const CodePanel = () => {
               >
                 Code
               </label>
-              <LangSelect lang={lang} setLang={setLang} />
+              <LangSelect
+                code={code}
+                setCode={setCode}
+                lang={lang}
+                setLang={setLang}
+              />
+              <ThemeSelect theme={theme} setTheme={setTheme} />
             </div>
             <div
-              className=" shadow-sm no-scrollbar"
+              className=" shadow-sm relative w-full  no-scrollbar"
               style={{ height: "300px", overflowY: "auto" }}
             >
+              {" "}
               <CodeEditor
                 setCode={setCode}
                 code={code}
                 lang={lang}
+                theme={theme}
                 disabled={loading}
               ></CodeEditor>
             </div>
           </div>
-          <div className="space-y-2">
-            <label
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
-              htmlFor="input"
-            >
-              Input
-            </label>
-            <Textarea
-              disabled={loading}
-              className="resize-none rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
-              id="input"
-              placeholder="Enter your input here..."
-              rows={4}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <label
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
-              htmlFor="result"
-            >
-              Output
-            </label>
-            <Textarea
-              aria-readonly
-              className=" resize-none rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
-              id="result"
-              placeholder="Your result will be displayed here..."
-              readOnly
-              rows={4}
-              value={output}
-            />
-          </div>
-          <div className="space-y-2">
-            <label
-              className="text-sm font-medium text-gray-700 dark:text-gray-300"
-              htmlFor="result"
-            >
-              Console
-            </label>
-            <Textarea
-              aria-readonly
-              className=" resize-none rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
-              id="result"
-              placeholder="Your result will be displayed here..."
-              readOnly
-              rows={4}
-              value={error}
-            />
-          </div>
+          <MultiTab
+            setVal={setVal}
+            val={val}
+            error={error}
+            output={output}
+            setInputValue={setInputValue}
+            inputValue={inputValue}
+            loading={loading}
+          ></MultiTab>
         </div>
         <div className="flex w-full gap-4 flex-col sm:flex-row">
           <Button
             variant={"outline"}
-            className="w-full bg-slate-200 hover:bg-slate-300"
+            className="w-full h-8 bg-slate-200 hover:bg-slate-300"
             onClick={() => {
               loading
                 ? toast({
@@ -194,13 +187,13 @@ const CodePanel = () => {
                 : onRun();
             }}
           >
-            <div className="gap-4 flex items-center">
+            <div className="gap-4  flex items-center">
               <span className="">{running ? "Code Runnig" : "Run Code"}</span>
               {running && <FcProcess className="animate-spin"></FcProcess>}
             </div>
           </Button>
           <Button
-            className="w-full"
+            className="w-full h-8"
             onClick={() => {
               loading
                 ? toast({
