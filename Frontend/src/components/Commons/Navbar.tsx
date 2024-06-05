@@ -21,7 +21,6 @@ export default function Navbar() {
       navigate("/login");
     } catch (error) {
       console.error("Error logging out:", error);
-      // Handle error if needed, such as displaying an error message to the user
     }
   };
   const { isAuthenticated, isLoading } = useAuth();
@@ -108,7 +107,7 @@ export default function Navbar() {
             <div className="grid gap-2 py-6">
               <a
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                href="#"
+                href="/"
               >
                 Home
               </a>
@@ -120,7 +119,7 @@ export default function Navbar() {
               </a>
               <a
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                href="#"
+                href="/problems"
               >
                 Problems
               </a>

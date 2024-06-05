@@ -10,7 +10,6 @@ export const registerUser = async (req, res) => {
     if (!fname || !lname || !email || !password || !username || !isAdmin) {
       return res.status(400).send("[Some Info Missing]");
     }
-
     //2. Hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
 

@@ -2,12 +2,11 @@ import DashboardAdmin from "@/pages/DashboardAdmin";
 import DashboardUser from "@/pages/DashboardUser";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 const DashboardRoute = () => {
   const [mounted, setMounted] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {

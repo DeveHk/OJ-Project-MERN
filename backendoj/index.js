@@ -19,6 +19,6 @@ app.use(cookieParser());
 app.use("/compiler", compilerRouter);
 app.use("/", testRouter);
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
   console.log("[SERVER COMPILER RUNNNING]");
 });

@@ -66,6 +66,22 @@ export const generateFile = (language, code) => {
         dir = path.join(dirCodes, "py");
       }
       break;
+    case "java":
+      {
+        filename = `${jobId}.java`;
+        dir = path.join(dirCodes, "java");
+      }
+      break;
+    /* case "java":
+      {
+        const mainclass = extractClassName(code);
+        ////console.log(mainclass);
+        filename = `${mainclass}.java`;
+        const javafiledir = path.join(dirCodes, "java");
+        genDir(javafiledir);
+        dir = path.join(javafiledir, jobId);
+      }
+      break;
     /*case "java":
       {
         const mainclass = extractClassName(code);
@@ -88,7 +104,6 @@ export const generateFile = (language, code) => {
   }
   genDir(dir);
   filepath = path.join(dir, filename);
-  //console.log(filepath);
   fs.writeFileSync(filepath, code);
   return filepath;
 };
@@ -105,13 +120,13 @@ export const execute = async (filepathcode, language, inputValue) => {
     case "c":
     case "cpp":
       {
-        filename = `${jobId}.exe`;
+        filename = `${jobId}.out`;
         const dir = path.join(dirOutputs, language == "c" ? "c" : "cpp");
         genDir(dir);
         filepath = path.join(dir, filename);
         compileString = `${
           language == "c" ? "gcc" : "g++"
-        } \"${filepathcode}\" -o \"${filepath}\" -mconsole`;
+        } \"${filepathcode}\" -o \"${filepath}\"`;
         exeString = (input) => `\"${filepath}\" < \"${input}\"`;
       }
       break;
@@ -119,6 +134,24 @@ export const execute = async (filepathcode, language, inputValue) => {
     case "python":
       {
         exeString = (input) => `python  -u \"${filepathcode}\" < \"${input}\"`;
+      }
+      break;
+    case "java":
+      {
+        exeString = (input) => `java \"${filepathcode}\" < \"${input}\"`;
+      }
+      break;
+    /* case "java":
+      {
+        const dirpath = path.dirname(filepathcode).split("/").slice(-1)[0];
+        console.log("[giving paths]", filepathcode, dirpath, jobId);
+        filename = `${jobId}`;
+        const filedir = path.join(dirCodes, "java");
+        const dir = path.join(filedir, dirpath);
+        genDir(dir);
+        filepath = path.join(dir, filename);
+        compileString = `javac \"${filepathcode}\"`;
+        exeString = (input) => `java \"${filepath}\" < \"${input}\"`;
       }
       break;
     /* case "js":
@@ -142,6 +175,7 @@ export const execute = async (filepathcode, language, inputValue) => {
     try {
       compileOut = await cmdExe(compileString);
     } catch (err) {
+      console.log(err);
       if (language == "c" || language == "cpp" || language == "c++")
         throw parseErrorsCpp(err, jobId);
       throw err;
@@ -152,7 +186,9 @@ export const execute = async (filepathcode, language, inputValue) => {
     const outputPromises = inputValue.map(async (input, i) => {
       const inputFile = await writeInputToFile(input, i);
       console.log(inputFile);
-      return cmdExe(exeString(inputFile));
+      const { stdout } = await cmdExe(exeString(inputFile));
+      console.log(stdout);
+      return stdout;
     });
     const outputValue = await Promise.all(outputPromises);
     return outputValue;
@@ -162,13 +198,114 @@ export const execute = async (filepathcode, language, inputValue) => {
   }
 };
 
+export const executeCheck = async (filepathcode, language, testcases) => {
+  const jobId = path.basename(filepathcode).split(".")[0];
+  let filename;
+  let filepath;
+  let exeString;
+  let compileString = "";
+  switch (language) {
+    case "c++":
+    case "c":
+    case "cpp":
+      {
+        filename = `${jobId}.out`;
+        const dir = path.join(dirOutputs, language == "c" ? "c" : "cpp");
+        genDir(dir);
+        filepath = path.join(dir, filename);
+        compileString = `${
+          language == "c" ? "gcc" : "g++"
+        } \"${filepathcode}\" -o \"${filepath}\"`;
+        exeString = (input) => `\"${filepath}\" < \"${input}\"`;
+      }
+      break;
+    case "py":
+    case "python":
+      {
+        exeString = (input) => `python  -u \"${filepathcode}\" < \"${input}\"`;
+      }
+      break;
+    case "java": {
+      exeString = (input) => `java \"${filepathcode}\" < \"${input}\"`;
+    }
+  }
+  let compileOut, codeOut;
+  /*Compilation*/
+  if (compileString)
+    try {
+      compileOut = await cmdExe(compileString);
+    } catch (err) {
+      if (language == "c" || language == "cpp" || language == "c++") {
+        throw parseErrorsCpp(err, jobId);
+      }
+      throw err;
+    }
+
+  /*Execution*/
+  let maxExecutionTime = 0;
+  for (const [i, testcase] of testcases.entries()) {
+    const inputFile = await writeInputToFile(testcase.testin, i);
+    const { stdout, executionTime } = await cmdExe(exeString(inputFile));
+    maxExecutionTime = Math.max(maxExecutionTime, executionTime);
+    const cmpOut = JSON.stringify(stdout.replaceAll("\r\n", "\n"));
+    const cmpTestOut = JSON.stringify(testcase.testout);
+    if (cmpOut === cmpTestOut) {
+      continue;
+    }
+    console.log("CASE:", i, cmpOut === cmpTestOut);
+    console.log("Expected:\n", cmpTestOut);
+    console.log("Output:\n", cmpOut);
+    // Compare lengths
+    console.log("Length of Expected:", cmpTestOut.length);
+    console.log("Length of Output:", cmpOut.length);
+    throw { status: 2, error: `failed at testcase ${i + 1}` };
+  }
+  return maxExecutionTime;
+  /* const outputPromises = testcases.map(async (testcase, i) => {
+    const inputFile = await writeInputToFile(testcase.testin, i);
+    console.log(inputFile);
+    const output = await cmdExe(exeString(inputFile));
+    const cmpOut = JSON.stringify(output.replaceAll("\r\n", "\n"));
+    const cmpTestOut = JSON.stringify(testcase.testout);
+    if (cmpOut == cmpTestOut) return true;
+    console.log("CASE:", i, output == testcase.testout);
+    console.log("Expected:\n", cmpTestOut);
+    console.log("Output:\n", cmpOut);
+
+    // Compare lengths
+    console.log("Length of Expected:", cmpTestOut.length);
+    console.log("Length of Output:", cmpOut.length);
+    throw { status: 2, error: `failed at testcase ${i+1}` };
+  });
+  const outputValue = await Promise.all(outputPromises);
+  return outputValue;*/
+};
+
 const cmdExe = (exeString) => {
   console.log(exeString);
   return new Promise((resolve, reject) => {
+    const start = process.hrtime();
     exec(exeString, (err, stdout, stderr) => {
+      const end = process.hrtime(start);
+      const executionTime = end[0] * 1000 + end[1] / 1e6;
       if (stderr) reject(new Error(stderr));
       if (err) reject(err);
-      resolve(stdout);
+      resolve({ stdout, executionTime });
     });
   });
 };
+
+function parseErrorsCpp(errorLog, filename) {
+  const errorLogString = String(errorLog);
+  const errorLines = errorLogString
+    .split("\n")
+    .filter((line) => line.includes("error:"));
+  const errorCount = errorLines.length;
+
+  const formattedErrors = errorLines.map((line) => {
+    console.log(filename);
+    return line.split(filename)[1];
+  });
+
+  return { status: 1, errorCount, formattedErrors };
+}
