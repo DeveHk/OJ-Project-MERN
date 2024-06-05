@@ -1,16 +1,6 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "../ui/textarea";
+import { Dispatch, SetStateAction } from "react";
 
 export function MultiTab({
   setVal,
@@ -20,6 +10,14 @@ export function MultiTab({
   loading,
   inputValue,
   setInputValue,
+}: {
+  setVal: Dispatch<SetStateAction<string>>;
+  val: string;
+  error: string | null;
+  output: string;
+  setInputValue: Dispatch<SetStateAction<string>>;
+  inputValue: string;
+  loading: boolean;
 }) {
   return (
     <Tabs

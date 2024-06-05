@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Textarea } from "../ui/textarea";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import CodeEditor from "./CodeEditorMonaco";
 import { LangSelect } from "./LangSelect";
