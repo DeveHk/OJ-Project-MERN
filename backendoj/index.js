@@ -8,7 +8,7 @@ const app = express();
 DBConnection();
 app.use(
   cors({
-    origin: process.env.CLIENT, // your frontend URL
+    origin: [process.env.CLIENT, process.env.RELEASE, process.env.PRODUCTION], // your frontend URL
     credentials: true,
   })
 );

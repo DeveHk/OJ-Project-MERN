@@ -9,12 +9,12 @@ import userRouter from "./routes/UserRouter.js";
 import cors from "cors";
 const app = express();
 DBConnection();
-/**app.use(
+app.use(
   cors({
-    origin: "https://oj-project-mern.vercel.app", //[process.env.CLIENT, process.env.RELEASE, process.env.PRODUCTION],
+    origin: [process.env.CLIENT, process.env.RELEASE, process.env.PRODUCTION],
     credentials: true,
   })
-); */
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
