@@ -11,7 +11,7 @@ import { RiArchive2Line, RiInboxUnarchiveLine } from "react-icons/ri";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FiArchive, FiDelete } from "react-icons/fi";
+import { FiDelete } from "react-icons/fi";
 import axios from "axios";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";

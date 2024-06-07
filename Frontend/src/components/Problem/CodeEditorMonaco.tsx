@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import Editor, { loader } from "@monaco-editor/react";
+import Editor, { loader, OnMount } from "@monaco-editor/react";
+import { editor as monacoEditor } from "monaco-editor";
 
 loader.init().then((monaco) => {
   monaco.editor.defineTheme("cd-game", {
@@ -48,7 +49,6 @@ const CodeEditor = ({
   setCode,
   code,
   theme,
-  disabled,
 }: {
   code: string;
   lang: string;
@@ -58,19 +58,21 @@ const CodeEditor = ({
 }) => {
   useEffect(() => {}, [lang]);
 
-  const editorRef = useRef(null);
+  const editorRef = useRef<monacoEditor.IStandaloneCodeEditor | null>(null);
 
-  function handleEditorDidMount(editor, monaco) {
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
-  }
-  function handleEditorChange(value, event) {
-    setCode(value);
-    console.log("here is the current model value:", value);
-  }
+    console.log("Monaco editor mounted: ", monaco);
+  };
+
+  const handleEditorChange = (value: string | undefined) => {
+    setCode(value || "");
+    console.log("Here is the current model value:", value);
+  };
 
   return (
     <Editor
-      className="h-full w-full bg-gray-200  rounded-lg overflow-hidden"
+      className="h-full w-full bg-gray-200 rounded-lg overflow-hidden"
       height={300}
       theme={theme}
       language={lang}

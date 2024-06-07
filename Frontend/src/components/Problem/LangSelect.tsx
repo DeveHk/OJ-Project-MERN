@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const initialcode = (lang: string) => {
+const initialcode = (lang: string): string => {
   switch (lang) {
     case "cpp":
       return `#include <bits/stdc++.h>
@@ -42,7 +42,7 @@ const initialcode = (lang: string) => {
   if __name__ == "__main__":
       main()`;
     default:
-      return `#include <bits/sdtc++.h>
+      return `#include <bits/stdc++.h>
   using namespace std;
   int main() {
        // Your code logic here
@@ -50,25 +50,29 @@ const initialcode = (lang: string) => {
   }`;
   }
 };
+
+type Lang = "cpp" | "java" | "c" | "javascript" | "python";
+
 export function LangSelect({
   lang,
   setLang,
   code,
   setCode,
 }: {
-  lang: string;
+  lang: Lang;
   code: string;
   setCode: React.Dispatch<React.SetStateAction<string>>;
-  setLang: React.Dispatch<React.SetStateAction<string>>;
+  setLang: React.Dispatch<React.SetStateAction<Lang>>;
 }) {
-  const [codeStates, setCodeStates] = useState({
+  const [codeStates, setCodeStates] = useState<Record<Lang, string>>({
     cpp: initialcode("cpp"),
     java: initialcode("java"),
     c: initialcode("c"),
     javascript: initialcode("javascript"),
     python: initialcode("python"),
   });
-  const handleLangChange = (newLang: string) => {
+
+  const handleLangChange = (newLang: Lang) => {
     setCodeStates((prevCodeStates) => ({
       ...prevCodeStates,
       [lang]: code,
@@ -76,13 +80,15 @@ export function LangSelect({
     setLang(newLang);
     setCode(codeStates[newLang]);
   };
+
   useEffect(() => {
     setCode(codeStates["cpp"]);
   }, []);
+
   return (
     <Select
       defaultValue={lang}
-      onValueChange={(value) => handleLangChange(value)}
+      onValueChange={(value) => handleLangChange(value as Lang)}
     >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="language" />
@@ -94,7 +100,7 @@ export function LangSelect({
           <SelectItem value="c">c</SelectItem>
           <SelectItem value="java">java</SelectItem>
           <SelectItem value="python">python</SelectItem>
-          {/* <SelectItem value="javascript">javascript</SelectItem>*/}
+          {/* <SelectItem value="javascript">javascript</SelectItem> */}
         </SelectGroup>
       </SelectContent>
     </Select>

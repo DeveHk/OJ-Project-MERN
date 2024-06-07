@@ -1,12 +1,9 @@
-import { Problem } from "@/api/problemUser";
-import { apicall } from "@/api/problemUser";
 import { useState, useEffect } from "react";
+import { Problem, TestCase, apicall } from "@/api/problemUser";
 import ProblemPanel from "./ProblemPanel";
 import CodePanel from "./CodePanel";
-type TestCase = {
-  testin: string;
-  testout: string;
-};
+import axios from "axios";
+
 export default function ProblemSinglePage({
   problemId,
 }: {
@@ -18,10 +15,16 @@ export default function ProblemSinglePage({
   useEffect(() => {
     const getData = async () => {
       if (problemId) {
-        const res = await apicall(problemId);
-        if (res && res.status === 200) {
-          setProblem(res.data.problem);
-          setTestcase(res.data.testcases || []);
+        try {
+          const data = await apicall(problemId);
+          setProblem(data.problem);
+          setTestcase(data.testcases || []);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            console.error("Error fetching problem data:", err.response?.data);
+          } else {
+            console.error("An unexpected error occurred:", err);
+          }
         }
       }
     };

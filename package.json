@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx concurrently \"nvm use 18.18.0 && cd frontend && npm run dev\" \"nvm use 18.18.0 && cd backend && npx nodemon start\""
+    "dev": "npx concurrently \"cd frontend && npm run dev\" \"cd backend && npx nodemon start\""
   },
   "author": "",
   "license": "ISC",

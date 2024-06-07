@@ -47,17 +47,17 @@ const AnimatedCanvasLight: React.FC = () => {
     }
 
     function initCircle(i: number) {
-      let x = rand(canvas.a.width);
-      let y = rand(canvas.a.height);
-      let n = noise3D(x * xOff, y * yOff, baseHue * zOff);
-      let t = rand(Math.PI * 2);
-      let speed = baseSpeed + rand(rangeSpeed);
-      let vx = speed * Math.cos(t);
-      let vy = speed * Math.sin(t);
-      let life = 0;
-      let ttl = baseTTL + rand(rangeTTL);
-      let radius = baseRadius + rand(rangeRadius);
-      let hue = baseHue + n * rangeHue;
+      const x: number = rand(canvas.a.width);
+      const y = rand(canvas.a.height);
+      const n = noise3D(x * xOff, y * yOff, baseHue * zOff);
+      const t = rand(Math.PI * 2);
+      const speed = baseSpeed + rand(rangeSpeed);
+      const vx = speed * Math.cos(t);
+      const vy = speed * Math.sin(t);
+      const life = 0;
+      const ttl = baseTTL + rand(rangeTTL);
+      const radius = baseRadius + rand(rangeRadius);
+      const hue = baseHue + n * rangeHue;
 
       circleProps.set([x, y, vx, vy, life, ttl, radius, hue], i);
     }
@@ -70,21 +70,21 @@ const AnimatedCanvasLight: React.FC = () => {
     }
 
     function updateCircle(i: number) {
-      let i2 = i + 1;
-      let i3 = i + 2;
-      let i4 = i + 3;
-      let i5 = i + 4;
-      let i6 = i + 5;
-      let i7 = i + 6;
-      let i8 = i + 7;
-      let x = circleProps[i];
-      let y = circleProps[i2];
-      let vx = circleProps[i3];
-      let vy = circleProps[i4];
+      const i2 = i + 1;
+      const i3 = i + 2;
+      const i4 = i + 3;
+      const i5 = i + 4;
+      const i6 = i + 5;
+      const i7 = i + 6;
+      const i8 = i + 7;
+      const x = circleProps[i];
+      const y = circleProps[i2];
+      const vx = circleProps[i3];
+      const vy = circleProps[i4];
       let life = circleProps[i5];
-      let ttl = circleProps[i6];
-      let radius = circleProps[i7];
-      let hue = circleProps[i8];
+      const ttl = circleProps[i6];
+      const radius = circleProps[i7];
+      const hue = circleProps[i8];
 
       drawCircle(x, y, life, ttl, radius, hue);
 

@@ -8,6 +8,8 @@ import { FcProcess } from "react-icons/fc";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThemeSelect } from "./ThemeSelect";
 import { MultiTab } from "./MultiTab";
+import axios from "axios";
+
 const CodePanel = () => {
   const { problemId } = useParams();
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const CodePanel = () => {
   const [val, setVal] = useState<string>("input");
 
   const { toast } = useToast();
+
   const onRun = async () => {
     setRunning(true);
     setloading(true);
@@ -36,34 +39,37 @@ const CodePanel = () => {
       const res = await apicallcompile(data);
       setOutput(res?.data?.output[0]);
       setVal("output");
-      console.log("[successfull]", res), output;
+      console.log("[successful]", res, output);
       setError("");
     } catch (err) {
-      console.log("[Unsuccessfull]", err);
-      if (err?.response.status == 403) {
-        if (err?.response.data.isAuthenticated == true) {
-          toast({
-            title: "Unauthorised",
-            description: "Only Non Admin user can submit a Solution",
-          });
-        } else {
-          toast({
-            title: "Unauthorised",
-            description: "Login to submit Solutions",
-          });
-          navigate("/login");
+      console.log("[Unsuccessful]", err);
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 403) {
+          if (err.response.data.isAuthenticated) {
+            toast({
+              title: "Unauthorized",
+              description: "Only Non-Admin user can submit a Solution",
+            });
+          } else {
+            toast({
+              title: "Unauthorized",
+              description: "Login to submit Solutions",
+            });
+            navigate("/login");
+          }
         }
+        if (err.message == "Network Error") {
+          setError("Unable to connect with the server!");
+        } else {
+          let _error = String(err);
+          if (["py", "python", "cpp", "c", "java"].includes(data.lang)) {
+            _error = err.response?.data.error.formattedErrors.join("\n");
+          }
+          setError(_error);
+        }
+      } else {
+        setError("An unexpected error occurred.");
       }
-      let _error = String(err);
-      if (
-        data.lang == "py" ||
-        data.lang == "python" ||
-        data.lang == "cpp" ||
-        data.lang == "c" ||
-        data.lang == "java"
-      )
-        _error = err?.response?.data.error.formattedErrors.join("\n");
-      setError(_error);
       setVal("console");
       setOutput("");
     } finally {
@@ -72,6 +78,7 @@ const CodePanel = () => {
     }
     console.log(data);
   };
+
   const onSubmit = async () => {
     setSubmitting(true);
     setloading(true);
@@ -84,56 +91,57 @@ const CodePanel = () => {
     try {
       setVal("console");
       const res = await apicallsubmit(data);
-      console.log("[Successfull]", res);
-      /*setOutput(res?.data?.output[0]);
-      console.log("[successfull]", res), output;*/
+      console.log("[Successful]", res);
       setError("SOLUTION SUBMITTED");
       toast({
         title: "Solution Submitted",
-        description: "Congratulations of Successfull submission!!",
+        description: "Congratulations on a successful submission!!",
       });
     } catch (err) {
-      console.log("[Unsuccessfull]", err);
-      if (err?.response.status == 403) {
-        if (err?.response.data.isAuthenticated == true) {
-          toast({
-            title: "Unauthorised",
-            description: "Only Non Admin user can submit a Solution",
-          });
+      console.log("[Unsuccessful]", err);
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 403) {
+          if (err.response.data.isAuthenticated) {
+            toast({
+              title: "Unauthorized",
+              description: "Only Non-Admin user can submit a Solution",
+            });
+          }
+          if (err.message == "Network Error") {
+            setError("Unable to connect with the server!");
+          } else {
+            toast({
+              title: "Unauthorized",
+              description: "Login to submit Solutions",
+            });
+            navigate("/login");
+          }
+        } else if (err.response?.status === 400) {
+          let _error = String(err);
+          if (["py", "python", "cpp", "c", "java"].includes(data.lang)) {
+            _error = err.response?.data.error.formattedErrors.join("\n");
+          }
+          setError(_error);
+          setOutput("");
         } else {
-          toast({
-            title: "Unauthorised",
-            description: "Login to submit Solutions",
-          });
-          navigate("/login");
+          setError(err.response?.data.error.error);
         }
-      } else if (err?.response.status == 400) {
-        let _error = String(err);
-        if (
-          data.lang == "py" ||
-          data.lang == "python" ||
-          data.lang == "cpp" ||
-          data.lang == "c" ||
-          data.lang == "java"
-        )
-          _error = err?.response?.data.error.formattedErrors.join("\n");
-        setError(_error);
         setOutput("");
       } else {
-        setError(err?.response.data.error.error);
+        setError("An unexpected error occurred.");
       }
-      setOutput("");
     } finally {
       setloading(false);
       setSubmitting(false);
     }
     console.log(data);
   };
+
   return (
     <div className="md:h-[90vh] md:py-0 py-2 overflow-y-scroll no-scrollbar bg-white rounded-lg shadow-md dark:bg-gray-950">
       <div className="p-6 space-y-5">
         <div className="grid gap-4">
-          <div className="space-y-2  overflow-x-scroll">
+          <div className="space-y-2 overflow-x-scroll">
             <div className="flex space-x-5 items-center">
               <label
                 className="text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -150,7 +158,7 @@ const CodePanel = () => {
               <ThemeSelect theme={theme} setTheme={setTheme} />
             </div>
             <div
-              className=" shadow-sm relative flex  w-full overflow-x-scroll no-scrollbar"
+              className="shadow-sm relative flex w-full overflow-x-scroll no-scrollbar"
               style={{ height: "300px", overflowY: "auto" }}
             >
               <CodeEditor
@@ -179,14 +187,14 @@ const CodePanel = () => {
             onClick={() => {
               loading
                 ? toast({
-                    title: "wait till code is running",
-                    description: "User activity Restricted",
+                    title: "Wait till code is running",
+                    description: "User activity restricted",
                   })
                 : onRun();
             }}
           >
-            <div className="gap-4  flex items-center">
-              <span className="">{running ? "Code Runnig" : "Run Code"}</span>
+            <div className="gap-4 flex items-center">
+              <span className="">{running ? "Code Running" : "Run Code"}</span>
               {running && <FcProcess className="animate-spin"></FcProcess>}
             </div>
           </Button>
@@ -195,8 +203,8 @@ const CodePanel = () => {
             onClick={() => {
               loading
                 ? toast({
-                    title: "wait till code is Submiting",
-                    description: "User activity Restricted",
+                    title: "Wait till code is submitting",
+                    description: "User activity restricted",
                   })
                 : onSubmit();
             }}

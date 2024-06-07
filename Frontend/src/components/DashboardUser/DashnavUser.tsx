@@ -2,8 +2,6 @@ import { cn } from "@/lib/utils";
 import { ListBulletIcon, PersonIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
 import { BiCode } from "react-icons/bi";
-import { MdAddCircleOutline } from "react-icons/md";
-import { RiProfileLine } from "react-icons/ri";
 const DashnavUser = ({
   active,
   setActive,

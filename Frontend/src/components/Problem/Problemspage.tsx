@@ -12,15 +12,17 @@ import {
   Pagination,
 } from "@/components/ui/pagination";
 import { useEffect, useState } from "react";
+import { CiBoxList } from "react-icons/ci";
 import apicalls from "@/api/problemUser";
 import { Problem } from "@/api/problemUser";
+import { FaArrowRight, FaFilter } from "react-icons/fa";
 
 export default function ProblemsPage() {
   const [pagenumber, setPagenumber] = useState(1);
   const [problems, setProblems] = useState<Problem[]>([]);
   const getproblems = async () => {
     const res = await apicalls(pagenumber);
-    if (res && res.data) setProblems(res?.data?.problems);
+    if (res) setProblems(res?.problems);
     console.log(res);
     console.log(problems);
   };
@@ -38,11 +40,11 @@ export default function ProblemsPage() {
             </h1>
             <div className="flex items-center gap-4">
               <Button size="sm" variant="outline">
-                <FilterIcon className="w-4 h-4 mr-2" />
+                <FaFilter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
               <Button size="sm" variant="outline">
-                <ListOrderedIcon className="w-4 h-4 mr-2" />
+                <CiBoxList className="w-4 h-4 mr-2" />
                 Sort
               </Button>
             </div>
@@ -74,7 +76,7 @@ export default function ProblemsPage() {
                   href={`/problems/${problem._id}`}
                 >
                   View Problem
-                  <ArrowRightIcon className="w-4 h-4" />
+                  <FaArrowRight className="w-4 h-4" />
                 </a>
               </Card>
             ))}
@@ -124,68 +126,5 @@ export default function ProblemsPage() {
         </div>
       </div>
     </main>
-  );
-}
-
-function ArrowRightIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
-  );
-}
-
-function FilterIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-    </svg>
-  );
-}
-
-function ListOrderedIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="10" x2="21" y1="6" y2="6" />
-      <line x1="10" x2="21" y1="12" y2="12" />
-      <line x1="10" x2="21" y1="18" y2="18" />
-      <path d="M4 6h1v4" />
-      <path d="M4 10h2" />
-      <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" />
-    </svg>
   );
 }

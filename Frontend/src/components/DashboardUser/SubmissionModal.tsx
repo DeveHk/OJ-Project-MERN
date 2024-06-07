@@ -7,10 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { SubmissionData } from "./DashProblemPanel";
-import CodeEditor from "../Problem/CodeEditor";
 
 export function SubmissionModal({
   submission,

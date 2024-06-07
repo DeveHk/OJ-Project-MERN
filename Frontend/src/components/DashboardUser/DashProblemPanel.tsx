@@ -29,7 +29,6 @@ export interface SubmissionData {
 const DashSubmissionPanel = () => {
   const [problems, setProblems] = useState<SubmissionData[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [submission, setSubmission] = useState<SubmissionData | null>(null);
   const apicall = async () => {

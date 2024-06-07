@@ -36,7 +36,7 @@ export default function DashUpdateProblem({
         statement: res.data.problem.description,
         active: res.data.problem.active,
         difficulty: res.data.problem.difficulty,
-        testCases: res.data.testcases.map((testcase) => {
+        testCases: res.data.testcases.map((testcase: Testcase) => {
           return {
             testin: testcase.testin,
             testout: testcase.testout,

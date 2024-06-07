@@ -1,5 +1,3 @@
-import React from "react";
-
 const Working = () => {
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-900">

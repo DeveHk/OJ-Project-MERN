@@ -3,7 +3,7 @@ import DashProblemPanel from "./DashProblemPanel";
 import DashnavAdmin from "./DashnavAdmin";
 import { useState } from "react";
 import DashUpdateProblem from "./DashupdateProblem";
-interface Problem {
+/**interface Problem {
   _id: string;
   u_id: string;
   title: string;
@@ -11,7 +11,7 @@ interface Problem {
   description: string;
   testcasecount: number;
   active: boolean;
-}
+} */
 export default function Dashboard() {
   const [active, setActive] = useState("problem");
   const [editproblem, setEditproblem] = useState<null | string>(null);

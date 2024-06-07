@@ -13,7 +13,8 @@ export interface SolutionSubmit {
 
 const apicallcompile = async (data: SolutionRun) => {
     const res = await axios.post(
-        `http://localhost:8000/compiler/run`, data, {
+        //`http://51.20.74.63:8000/compiler/run`, data, {
+        `http://51.20.74.63:8000/compiler/run`, data, {
         withCredentials: true
     }
     );

@@ -5,10 +5,11 @@ import {
   NavigationMenuList,
   NavigationMenu,
 } from "@/components/ui/navigation-menu";
+import { IoMdMenu } from "react-icons/io";
 import useAuth from "../hooks/Auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaCode } from "react-icons/fa";
+import { FaCode, FaMountain } from "react-icons/fa";
 export default function Navbar() {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -95,13 +96,13 @@ export default function Navbar() {
         <Sheet>
           <SheetTrigger asChild>
             <Button className="lg:hidden h-6" size="icon" variant="outline">
-              <MenuIcon className="h-4 w-4" />
+              <IoMdMenu className="h-4 w-4" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
             <a href="#">
-              <MountainIcon className="h-6 w-6" />
+              <FaMountain className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
             </a>
             <div className="grid gap-2 py-6">
@@ -134,44 +135,5 @@ export default function Navbar() {
         </Sheet>
       </div>
     </header>
-  );
-}
-
-function MenuIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="4" x2="20" y1="12" y2="12" />
-      <line x1="4" x2="20" y1="6" y2="6" />
-      <line x1="4" x2="20" y1="18" y2="18" />
-    </svg>
-  );
-}
-function MountainIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-    </svg>
   );
 }
