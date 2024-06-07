@@ -51,20 +51,18 @@ const initialcode = (lang: string): string => {
   }
 };
 
-type Lang = "cpp" | "java" | "c" | "javascript" | "python";
-
 export function LangSelect({
   lang,
   setLang,
   code,
   setCode,
 }: {
-  lang: Lang;
+  lang: string;
   code: string;
   setCode: React.Dispatch<React.SetStateAction<string>>;
-  setLang: React.Dispatch<React.SetStateAction<Lang>>;
+  setLang: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const [codeStates, setCodeStates] = useState<Record<Lang, string>>({
+  const [codeStates, setCodeStates] = useState<Record<string, string>>({
     cpp: initialcode("cpp"),
     java: initialcode("java"),
     c: initialcode("c"),
@@ -72,7 +70,7 @@ export function LangSelect({
     python: initialcode("python"),
   });
 
-  const handleLangChange = (newLang: Lang) => {
+  const handleLangChange = (newLang: string) => {
     setCodeStates((prevCodeStates) => ({
       ...prevCodeStates,
       [lang]: code,
@@ -88,7 +86,7 @@ export function LangSelect({
   return (
     <Select
       defaultValue={lang}
-      onValueChange={(value) => handleLangChange(value as Lang)}
+      onValueChange={(value) => handleLangChange(value as string)}
     >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="language" />

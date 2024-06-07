@@ -1,4 +1,3 @@
-import React from "react";
 import Markdown from "react-markdown";
 import { Problem } from "@/api/problemUser";
 import remarkGfm from "remark-gfm";
