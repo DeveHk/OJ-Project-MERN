@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -314,10 +314,10 @@ const RegisterFrom = () => {
             </Button>
             <div className="w-full text-sm text-right mt-2">
               Already have an account?{" "}
-              <a className="text-blue-600 italic" href="/login">
+              <Link className="text-blue-600 italic" to="/login">
                 {" "}
                 Login
-              </a>
+              </Link>
             </div>
           </div>
         </form>

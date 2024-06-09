@@ -16,6 +16,7 @@ import { CiBoxList } from "react-icons/ci";
 import apicalls from "@/api/problemUser";
 import { Problem } from "@/api/problemUser";
 import { FaArrowRight, FaFilter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function ProblemsPage() {
   const [pagenumber, setPagenumber] = useState(1);
@@ -71,13 +72,13 @@ export default function ProblemsPage() {
                     </div>
                   </div>
                 </div>
-                <a
+                <Link
                   className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80"
-                  href={`/problems/${problem._id}`}
+                  to={`/problems/${problem._id}`}
                 >
                   View Problem
                   <FaArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </Card>
             ))}
           </div>
@@ -92,22 +93,22 @@ export default function ProblemsPage() {
                       setPagenumber(pagenumber - 1);
                     }}
                   >
-                    <PaginationPrevious href="#" />
+                    <PaginationPrevious to="#" />
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink href="#">{pagenumber - 1}</PaginationLink>
+                    <PaginationLink to="#">{pagenumber - 1}</PaginationLink>
                   </PaginationItem>
                 </>
               )}
               <PaginationItem>
-                <PaginationLink href="#" isActive>
+                <PaginationLink to="#" isActive>
                   {pagenumber}
                 </PaginationLink>
               </PaginationItem>
               {problems.length == 4 && (
                 <>
                   <PaginationItem>
-                    <PaginationLink href="#">{pagenumber + 1}</PaginationLink>
+                    <PaginationLink to="#">{pagenumber + 1}</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
                     <PaginationEllipsis />
@@ -117,7 +118,7 @@ export default function ProblemsPage() {
                       setPagenumber(pagenumber + 1);
                     }}
                   >
-                    <PaginationNext href="#" />
+                    <PaginationNext to="#" />
                   </PaginationItem>
                 </>
               )}

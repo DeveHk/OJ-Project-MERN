@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { SVGProps } from "react";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -19,18 +20,18 @@ const Landing = () => {
               community, and unlock your full potential as a developer.
             </p>
             <div className="flex space-x-4">
-              <a
+              <Link
                 className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600"
-                href="/problems"
+                to="/problems"
               >
                 Start Coding
-              </a>
-              <a
+              </Link>
+              <Link
                 className="text-gray-400 hover:text-white px-6 py-3 rounded-md"
-                href="#"
+                to="#"
               >
                 Learn More
-              </a>
+              </Link>
             </div>
           </div>
           <div className="md:w-1/2 mt-8 md:mt-0">
@@ -214,18 +215,18 @@ const Landing = () => {
                 your skills.
               </p>
               <div className="flex space-x-4">
-                <a
+                <Link
                   className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600"
-                  href="#"
+                  to="#"
                 >
                   Sign Up
-                </a>
-                <a
+                </Link>
+                <Link
                   className="text-gray-400 hover:text-white px-6 py-3 rounded-md"
-                  href="#"
+                  to="#"
                 >
                   Learn More
-                </a>
+                </Link>
               </div>
             </div>
           </div>

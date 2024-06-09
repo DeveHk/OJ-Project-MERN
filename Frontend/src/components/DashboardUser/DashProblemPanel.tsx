@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import { SubmissionModal } from "./SubmissionModal";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 export interface SubmissionData {
   _id: string;
   code_ref: string;
@@ -95,13 +96,13 @@ const DashSubmissionPanel = () => {
                   <TableCell className="hover:text-blue-800">
                     {" "}
                     {mounted ? (
-                      <a
-                        href={`/problems/${problem.prob_id}`}
+                      <Link
+                        to={`/problems/${problem.prob_id}`}
                         className="h-full w-full flex items-center"
                       >
                         {" "}
                         {problem.prob_id.slice(-10, -1)}
-                      </a>
+                      </Link>
                     ) : (
                       <Skeleton className="w-[60px] h-[20px] rounded-full" />
                     )}

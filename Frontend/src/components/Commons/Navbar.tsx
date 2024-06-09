@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { IoMdMenu } from "react-icons/io";
 import useAuth from "../hooks/Auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaCode, FaMountain } from "react-icons/fa";
 export default function Navbar() {
@@ -28,44 +28,45 @@ export default function Navbar() {
   if (isLoading) return null;
   return (
     <header className="sticky z-10 top-0 flex  py-2 w-full shrink-0 bg-white/40 dark:bg-black/40 backdrop-blur-[15px] items-center px-4 md:px-6">
-      <div className="w-full flex justify-between ">
-        <a className=" " href="/">
+      <div className="w-full flex items-center h-full justify-between ">
+        <Link className="flex gap-2 h-full justify-center items-center " to="/">
           <FaCode className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
-        </a>
+          <span className="sr-only">Online Judge</span>
+          <span className="lg:block hidden font-semibold">Online Judge</span>
+        </Link>
         <NavigationMenu className="hidden  lg:flex">
           <NavigationMenuList>
             <NavigationMenuLink asChild>
-              <a
+              <Link
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                href="/"
+                to="/"
               >
                 Home
-              </a>
+              </Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
-              <a
+              <Link
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                href="#"
+                to="#"
               >
                 About
-              </a>
+              </Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
-              <a
+              <Link
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                href="/problems"
+                to="/problems"
               >
                 Problems
-              </a>
+              </Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
-              <a
+              <Link
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                href="#"
+                to="#"
               >
                 Challenges
-              </a>
+              </Link>
             </NavigationMenuLink>
           </NavigationMenuList>
         </NavigationMenu>
@@ -73,21 +74,21 @@ export default function Navbar() {
       <div className="ml-auto  flex gap-2">
         {!isAuthenticated ? (
           <>
-            <a href="/login" className="">
+            <Link to="/login" className="">
               <Button variant="outline" className="h-6">
                 Sign in
               </Button>
-            </a>
-            <a href="/register">
+            </Link>
+            <Link to="/register">
               <Button className="h-6">Sign Up</Button>
-            </a>
+            </Link>
           </>
         ) : (
           <>
             {" "}
-            <a href="/dashboard">
+            <Link to="/dashboard">
               <Button className="h-6">Dashboard</Button>
-            </a>
+            </Link>
             <Button onClick={handleLogout} className="h-6" variant="outline">
               Logout
             </Button>
@@ -101,35 +102,35 @@ export default function Navbar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
-            <a href="#">
+            <Link to="#">
               <FaMountain className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
-            </a>
+            </Link>
             <div className="grid gap-2 py-6">
-              <a
+              <Link
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                href="/"
+                to="/"
               >
                 Home
-              </a>
-              <a
+              </Link>
+              <Link
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                href="#"
+                to="#"
               >
                 About
-              </a>
-              <a
+              </Link>
+              <Link
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                href="/problems"
+                to="/problems"
               >
                 Problems
-              </a>
-              <a
+              </Link>
+              <Link
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                href="#"
+                to="#"
               >
                 Challenges
-              </a>
+              </Link>
             </div>
           </SheetContent>
         </Sheet>
