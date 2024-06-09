@@ -33,7 +33,7 @@ export const refreash = async (req, res, next) => {
         const accessTokenOptions = {
           expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1 hour
           httpOnly: true,
-          sameSite: "strict",
+          //sameSite: "strict",
         };
         res.cookie("accessToken", newAccessToken, accessTokenOptions);
         req.user = userdata;
