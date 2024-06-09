@@ -11,10 +11,10 @@ const Hero = () => {
               Conquer Coding Challenges, Elevate Your Skills
             </div>
             <p className="text-sm text-slate-300 md:text-xl dark:text-slate-200">
-              Online Judge is your ultimate platform for honing your
-              problem-solving abilities and mastering coding concepts. Dive into
-              a vast collection of challenges, compete with a thriving
-              community, and unlock your full potential as a developer.
+              An ultimate platform for honing your problem-solving abilities and
+              mastering coding concepts. Dive into a vast collection of
+              challenges, compete with a thriving community, and unlock your
+              full potential as a developer.
             </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -38,15 +38,3 @@ const Hero = () => {
 };
 
 export default Hero;
-{
-  /* <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-          {/*<Image
-            alt="Hero"
-            className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
-            height="550"
-            src="/placeholder.svg"
-            width="550"
-  />}
-          
-        </div>*/
-}

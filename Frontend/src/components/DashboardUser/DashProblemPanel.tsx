@@ -13,6 +13,7 @@ import axios from "axios";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import { SubmissionModal } from "./SubmissionModal";
+import { Button } from "../ui/button";
 export interface SubmissionData {
   _id: string;
   code_ref: string;
@@ -25,6 +26,7 @@ export interface SubmissionData {
   user_id: string;
   verdict: boolean;
   __v: number;
+  casespassed: number;
 }
 const DashSubmissionPanel = () => {
   const [problems, setProblems] = useState<SubmissionData[]>([]);
@@ -68,6 +70,7 @@ const DashSubmissionPanel = () => {
                 <TableHead>Verdict</TableHead>
                 <TableHead>language</TableHead>
                 <TableHead>Time</TableHead>
+                <TableHead>View</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -130,6 +133,22 @@ const DashSubmissionPanel = () => {
                   <TableCell>
                     {mounted ? (
                       problem.createdAt
+                    ) : (
+                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {mounted ? (
+                      <Button
+                        variant={"outline"}
+                        onClick={() => {
+                          setSubmission(problem);
+                          setOpen(true);
+                        }}
+                        className="h-4"
+                      >
+                        View
+                      </Button>
                     ) : (
                       <Skeleton className="w-[60px] h-[20px] rounded-full" />
                     )}

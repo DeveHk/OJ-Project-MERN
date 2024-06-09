@@ -14,16 +14,14 @@ const DashboardRoute = () => {
         const response = await axios.get("http://localhost:5000/auth/islogin", {
           withCredentials: true,
         });
-        console.log(response);
+        console.log("[response]", response);
         setMounted(true);
-        // setIsAuth(response.data.isAuthenticated);
         if (response.data.isAuthenticated) {
-          setIsAdmin(response.data.user.role === "admin");
+          setIsAdmin(response.data.user.isAdmin);
         }
       } catch (error) {
         console.error("Error checking authentication:", error);
         setMounted(true);
-        //setIsAuth(false);
       }
     };
     if (!mounted) {

@@ -9,7 +9,7 @@ const ProblemPanel = ({
   problem,
   testcase,
 }: {
-  problem: Problem;
+  problem: Problem | null;
   testcase: TestCase[];
 }) => {
   return (

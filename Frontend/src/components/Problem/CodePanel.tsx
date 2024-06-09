@@ -23,10 +23,12 @@ const CodePanel = () => {
   const [running, setRunning] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [val, setVal] = useState<string>("input");
+  const [casepassed, setCasepassed] = useState<number>(-1); //-1->No n->casespassed
+  const [lastwa, setlastwa] = useState<number>(0); //0->No 1->WA 2->TLE
 
   const { toast } = useToast();
-
   const onRun = async () => {
+    setCasepassed(-1);
     setRunning(true);
     setloading(true);
     setError("");
@@ -44,7 +46,15 @@ const CodePanel = () => {
     } catch (err) {
       console.log("[Unsuccessful]", err);
       if (axios.isAxiosError(err)) {
-        if (err.response?.status === 403) {
+        if (err.response?.status === 400) {
+          if (err.response?.data.error.status == 1) {
+            let _error = String(err);
+            if (["py", "python", "cpp", "c", "java"].includes(data.lang)) {
+              _error = err.response?.data.error.formattedErrors.join("\n");
+            }
+            setError(_error);
+          } else setError(err.response?.data.message);
+        } else if (err.response?.status === 403) {
           if (err.response.data.isAuthenticated) {
             toast({
               title: "Unauthorized",
@@ -57,15 +67,8 @@ const CodePanel = () => {
             });
             navigate("/login");
           }
-        }
-        if (err.message == "Network Error") {
+        } else if (err.message == "Network Error") {
           setError("Unable to connect with the server!");
-        } else {
-          let _error = String(err);
-          if (["py", "python", "cpp", "c", "java"].includes(data.lang)) {
-            _error = err.response?.data.error.formattedErrors.join("\n");
-          }
-          setError(_error);
         }
       } else {
         setError("An unexpected error occurred.");
@@ -78,8 +81,8 @@ const CodePanel = () => {
     }
     console.log(data);
   };
-
   const onSubmit = async () => {
+    setCasepassed(-1);
     setSubmitting(true);
     setloading(true);
     setError("");
@@ -97,18 +100,32 @@ const CodePanel = () => {
         title: "Solution Submitted",
         description: "Congratulations on a successful submission!!",
       });
+      setCasepassed(res.data?.submission.casespassed);
+      setlastwa(0);
     } catch (err) {
       console.log("[Unsuccessful]", err);
       if (axios.isAxiosError(err)) {
-        if (err.response?.status === 403) {
+        if (err.response?.status == 400) {
+          if (err.response?.data.error.status == 0) {
+            setCasepassed(err.response?.data.error.error.casespassed);
+            setlastwa(2);
+          } else if (err.response?.data.error.status == 1) {
+            let _error = String(err);
+            if (["py", "python", "cpp", "c", "java"].includes(data.lang)) {
+              _error = err.response?.data.error.formattedErrors.join("\n");
+            }
+            setlastwa(1);
+            setError(_error);
+          } else if (err.response?.data.error.status == 2) {
+            setCasepassed(err.response?.data.error.error.casespassed);
+            setlastwa(1);
+          } else setError(err.response?.data.message);
+        } else if (err.response?.status === 403) {
           if (err.response.data.isAuthenticated) {
             toast({
               title: "Unauthorized",
               description: "Only Non-Admin user can submit a Solution",
             });
-          }
-          if (err.message == "Network Error") {
-            setError("Unable to connect with the server!");
           } else {
             toast({
               title: "Unauthorized",
@@ -116,19 +133,9 @@ const CodePanel = () => {
             });
             navigate("/login");
           }
-        } else if (err.response?.status === 400) {
-          let _error = String(err);
-          if (["py", "python", "cpp", "c", "java"].includes(data.lang)) {
-            _error = err.response?.data.error.formattedErrors.join("\n");
-          }
-          setError(_error);
-          setOutput("");
-        } else {
-          setError(err.response?.data.error.error);
+        } else if (err.message == "Network Error") {
+          setError("Unable to connect with the server!");
         }
-        setOutput("");
-      } else {
-        setError("An unexpected error occurred.");
       }
     } finally {
       setloading(false);
@@ -171,6 +178,8 @@ const CodePanel = () => {
             </div>
           </div>
           <MultiTab
+            casepassed={casepassed}
+            lastwa={lastwa}
             setVal={setVal}
             val={val}
             error={error}

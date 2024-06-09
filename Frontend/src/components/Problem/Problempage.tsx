@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Problem, TestCase, apicall } from "@/api/problemUser";
 import ProblemPanel from "./ProblemPanel";
 import CodePanel from "./CodePanel";
 import axios from "axios";
+import { Model, Layout, TabNode } from "flexlayout-react";
+import "flexlayout-react/style/light.css";
 
 export default function ProblemSinglePage({
   problemId,
@@ -11,6 +13,42 @@ export default function ProblemSinglePage({
 }) {
   const [problem, setProblem] = useState<Problem | null>(null);
   const [testcase, setTestcase] = useState<TestCase[]>([]);
+  const [model] = useState<Model>(
+    Model.fromJson({
+      global: {},
+      borders: [],
+      layout: {
+        type: "row",
+        weight: 100,
+        children: [
+          {
+            type: "tabset",
+            weight: 50,
+            selected: 0,
+            children: [
+              {
+                type: "tab",
+                name: "Problem",
+                component: "problem",
+              },
+            ],
+          },
+          {
+            type: "tabset",
+            weight: 50,
+            selected: 0,
+            children: [
+              {
+                type: "tab",
+                name: "Code",
+                component: "code",
+              },
+            ],
+          },
+        ],
+      },
+    })
+  );
 
   useEffect(() => {
     const getData = async () => {
@@ -32,10 +70,23 @@ export default function ProblemSinglePage({
     getData();
   }, [problemId]);
 
+  const factory = useCallback(
+    (node: TabNode) => {
+      const component = node.getComponent();
+      if (component === "problem") {
+        return <ProblemPanel problem={problem} testcase={testcase} />;
+      }
+      if (component === "code") {
+        return <CodePanel />;
+      }
+      return null;
+    },
+    [problem, testcase]
+  );
+
   return (
-    <div className="grid lg:grid-cols-[500px_1fr] md:grid-cols-[300px_1fr] gap-6 w-full lg:px-5 mx-auto py-8">
-      {problem && <ProblemPanel problem={problem} testcase={testcase} />}
-      <CodePanel />
+    <div className="flex flex-col  h-[100vh]">
+      <Layout model={model} factory={factory} />
     </div>
   );
 }

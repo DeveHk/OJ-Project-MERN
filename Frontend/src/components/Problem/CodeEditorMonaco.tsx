@@ -67,7 +67,6 @@ const CodeEditor = ({
 
   const handleEditorChange = (value: string | undefined) => {
     setCode(value || "");
-    console.log("Here is the current model value:", value);
   };
 
   return (
