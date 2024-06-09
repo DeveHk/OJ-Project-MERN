@@ -1,3 +1,4 @@
+import { BACKENDURL } from "@/api/api";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
@@ -9,7 +10,7 @@ const ProtectedRoutes = ({ type }: { type: string }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/auth/islogin", {
+        const response = await axios.get(`${BACKENDURL}:5000/auth/islogin`, {
           withCredentials: true,
         });
         setMounted(true);

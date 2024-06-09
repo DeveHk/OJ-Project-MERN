@@ -1,8 +1,9 @@
 import axios from "axios";
+import { BACKENDURL } from "./api";
 const apicalls = async () => {
     try {
         const res = await axios.get(
-            "http://localhost:5000/problem/read",
+            `${BACKENDURL}:5000/problem/read`,//http://localhost
             {
                 withCredentials: true,
             }

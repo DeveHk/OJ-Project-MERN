@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { BACKENDURL } from "@/api/api";
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -8,7 +9,7 @@ const useAuth = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/auth/islogin", {
+        const response = await axios.get(`${BACKENDURL}:5000/auth/islogin`, {
           withCredentials: true,
         });
         setIsAuthenticated(response.data.isAuthenticated);

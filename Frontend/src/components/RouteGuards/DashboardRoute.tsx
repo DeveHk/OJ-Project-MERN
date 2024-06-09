@@ -1,3 +1,4 @@
+import { BACKENDURL } from "@/api/api";
 import DashboardAdmin from "@/pages/DashboardAdmin";
 import DashboardUser from "@/pages/DashboardUser";
 import axios from "axios";
@@ -11,7 +12,7 @@ const DashboardRoute = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/auth/islogin", {
+        const response = await axios.get(`${BACKENDURL}:5000/auth/islogin`, {
           withCredentials: true,
         });
         console.log("[response]", response);

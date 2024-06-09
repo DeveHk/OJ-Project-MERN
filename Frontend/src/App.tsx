@@ -8,7 +8,6 @@ import ProtectedRoutes from "./components/RouteGuards/ProtectedRoute";
 import DashboardRoute from "./components/RouteGuards/DashboardRoute";
 import Problems from "./pages/Problems";
 import Problem from "./pages/Problem";
-
 function App() {
   return (
     <Router>

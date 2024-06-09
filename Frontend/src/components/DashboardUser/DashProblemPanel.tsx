@@ -15,6 +15,7 @@ import { Skeleton } from "../ui/skeleton";
 import { SubmissionModal } from "./SubmissionModal";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import { BACKENDURL } from "@/api/api";
 export interface SubmissionData {
   _id: string;
   code_ref: string;
@@ -36,7 +37,7 @@ const DashSubmissionPanel = () => {
   const [submission, setSubmission] = useState<SubmissionData | null>(null);
   const apicall = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/user/submissions", {
+      const res = await axios.get(`${BACKENDURL}:5000/user/submissions`, {
         withCredentials: true,
       });
       console.log(res);

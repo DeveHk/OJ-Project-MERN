@@ -25,6 +25,7 @@ import {
   Select,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { BACKENDURL } from "@/api/api";
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{5,15}$/;
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -84,7 +85,7 @@ const RegisterFrom = () => {
     setValid(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/register",
+        `${BACKENDURL}:5000/auth/register`,
         values
       );
       console.log("Data saved successfully:", response.data);

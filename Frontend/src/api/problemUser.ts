@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BACKENDURL } from "./api";
 
 export interface Problem {
     _id: string;
@@ -47,7 +48,7 @@ export interface ApiResponseData1 {
 const apicalls = async (num: number): Promise<ApiResponseData1> => {
     try {
         const res = await axios.post(
-            "http://localhost:5000/question/read", {
+            `${BACKENDURL}:5000/question/read`, {
             page: num
         },
         );
@@ -62,7 +63,7 @@ const apicalls = async (num: number): Promise<ApiResponseData1> => {
 export const apicall = async (id: string | null): Promise<ApiResponseData> => {
     try {
         const res = await axios.get(
-            `http://localhost:5000/question/read/${id}`
+            `${BACKENDURL}:5000/question/read/${id}`
         );
         return res.data;
     } catch (err) {

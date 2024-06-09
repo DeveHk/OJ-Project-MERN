@@ -15,6 +15,7 @@ import { FiDelete } from "react-icons/fi";
 import axios from "axios";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
+import { BACKENDURL } from "@/api/api";
 interface Problem {
   _id: string;
   u_id: string;
@@ -36,7 +37,7 @@ const DashProblemPanel = ({
   const [loading, setLoading] = useState(false);
   const apicall = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/problem/read", {
+      const res = await axios.get(`${BACKENDURL}:5000/problem/read`, {
         withCredentials: true,
       });
       console.log(res);
@@ -50,7 +51,7 @@ const DashProblemPanel = ({
     try {
       setLoading(true);
       const res = await axios.put(
-        `http://localhost:5000/problem/disable/${problemId}`,
+        `${BACKENDURL}:5000/problem/disable/${problemId}`,
         {}, // Put requests need a body, even if empty
         {
           withCredentials: true,

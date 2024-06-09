@@ -18,6 +18,7 @@ import {
 import axios from "axios";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
+import { BACKENDURL } from "@/api/api";
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{5,15}$/;
 const LoginFrom = () => {
   const { toast } = useToast();
@@ -46,7 +47,7 @@ const LoginFrom = () => {
     setValid(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/login",
+        `${BACKENDURL}:5000/auth/login`,
         values,
         {
           withCredentials: true,

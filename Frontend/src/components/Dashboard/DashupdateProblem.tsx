@@ -3,6 +3,7 @@ import Problemform from "./Problemform";
 import { formSchema } from "@/Schema/CreateProblem";
 import { z } from "zod";
 import { useEffect, useState } from "react";
+import { BACKENDURL } from "@/api/api";
 interface Testcase {
   testin: string;
   testout: string;
@@ -25,7 +26,7 @@ export default function DashUpdateProblem({
   const apicall = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/problem/read/${problem}`,
+        `${BACKENDURL}:5000/problem/read/${problem}`,
         {
           withCredentials: true,
         }
@@ -51,13 +52,9 @@ export default function DashUpdateProblem({
     }
   };
   const api = (values: z.infer<typeof formSchema>) => {
-    return axios.put(
-      `http://localhost:5000/problem/update/${problem}`,
-      values,
-      {
-        withCredentials: true,
-      }
-    );
+    return axios.put(`${BACKENDURL}:5000/problem/update/${problem}`, values, {
+      withCredentials: true,
+    });
   };
   useEffect(() => {
     if (problem) apicall();

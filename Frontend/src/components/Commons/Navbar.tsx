@@ -10,12 +10,13 @@ import useAuth from "../hooks/Auth";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaCode, FaMountain } from "react-icons/fa";
+import { BACKENDURL } from "@/api/api";
 export default function Navbar() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       // Make a request to the logout endpoint
-      const res = await axios.get("http://localhost:5000/auth/logout", {
+      const res = await axios.get(`${BACKENDURL}:5000/auth/logout`, {
         withCredentials: true,
       });
       console.log(res);

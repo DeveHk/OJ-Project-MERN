@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
+import { BACKENDURL } from "@/api/api";
 interface User {
   username: string;
   fname: string;
@@ -21,7 +22,7 @@ export default function Profile() {
   const [mounted, setMounted] = useState(false);
   const apicall = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/user/profile", {
+      const res = await axios.get(`${BACKENDURL}:5000/user/profile`, {
         withCredentials: true,
       });
       console.log(res);
