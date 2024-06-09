@@ -7,10 +7,8 @@ import {
   readProblemall,
   updateproblem,
 } from "../controller/problemController.js";
-import {
-  authorizationAdmin,
-  authorizationJWT,
-} from "../controller/authoController.js";
+import { authorizationAdmin } from "../controller/authoController/authorizationaAdmin.js";
+import { authorizationJWT } from "../controller/authoController/authorizationJWT.js";
 const router = express.Router();
 
 router.post("/create", authorizationJWT, authorizationAdmin, createproblem);

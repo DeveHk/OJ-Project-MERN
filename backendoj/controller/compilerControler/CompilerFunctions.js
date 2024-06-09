@@ -92,9 +92,8 @@ export const execute = async (filepathcode, language, inputValue) => {
     try {
       await cmdExe(compileString);
     } catch (err) {
-      console.log(err);
       if (language == "c" || language == "cpp" || language == "c++")
-        throw parseErrors(err, jobId);
+        throw parseErrors(err, jobId); //E0
       throw err;
     }
 
@@ -103,17 +102,18 @@ export const execute = async (filepathcode, language, inputValue) => {
     const outputPromises = inputValue.map(async (input, i) => {
       const inputFile = await writeInputToFile(input, i);
       console.log(inputFile);
-      const { stdout } = await cmdExe(exeString(inputFile));
+      const { stdout } = await cmdExe(exeString(inputFile), true);
       console.log(stdout);
       return stdout;
     });
     const outputValue = await Promise.all(outputPromises);
     return outputValue;
   } catch (err) {
-    console.log(err);
-    if (language == "java") throw parseErrors(err, jobId);
+    if (err.killed || err.code == "ERR_CHILD_PROCESS_STDIO_MAXBUFFER")
+      throw { status: 0, error: String(err) }; //E0
+    if (language == "java") throw parseErrors(err, jobId); //E1
     if (language == "python" || language == "py")
-      throw parseErrorsPy(err, jobId);
-    throw { status: 2, error: String(err) };
+      throw parseErrorsPy(err, jobId); //E1
+    throw { status: 2, error: String(err) }; //E2
   }
 };

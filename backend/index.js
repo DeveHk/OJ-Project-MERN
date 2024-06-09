@@ -9,7 +9,12 @@ import userRouter from "./routes/UserRouter.js";
 import cors from "cors";
 const app = express();
 DBConnection();
-
+app.use(
+  cors({
+    origin: [process.env.CLIENT, process.env.RELEASE, process.env.PRODUCTION],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

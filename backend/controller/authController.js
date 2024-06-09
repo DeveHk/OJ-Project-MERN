@@ -79,7 +79,7 @@ export const loginUser = async (req, res) => {
       }
     );
     const refreshToken = jwt.sign(
-      { id: userdata._id, role: userdata.isAdmin },
+      { id: userdata._id, isAdmin: userdata.isAdmin },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "7d" }
     );
@@ -173,7 +173,6 @@ export const isLogin = async (req, res) => {
 
 export const logoutUser = (req, res) => {
   try {
-    // Clear the access token and refresh token cookies
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 

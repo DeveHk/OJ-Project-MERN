@@ -35,6 +35,11 @@ const submissionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    casespassed: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -38,45 +38,69 @@ export const executeCheck = async (filepathcode, language, testcases) => {
     try {
       await cmdExe(compileString);
     } catch (err) {
-      if (language == "c" || language == "cpp" || language == "c++") {
-        console.log("[submit compiler error]", err);
-        throw parseErrors(err, jobId);
-      }
+      if (language == "c" || language == "cpp" || language == "c++")
+        throw parseErrors(err, jobId); //E1
       throw err;
     }
 
   try {
     const inputFile = await writeInputToFile(testcases[0].testin, 0);
-    await cmdExe(exeString(inputFile));
+    await cmdExe(exeString(inputFile, true));
   } catch (err) {
-    if (language == "java") {
-      console.log("[submit compiler error]", err);
-      throw parseErrors(err, jobId);
-    } else if (language == "py" || language == "python") {
-      console.log("[submit compiler error]", err);
-      throw parseErrorsPy(err, jobId);
-    }
+    if (err.killed || err.code == "ERR_CHILD_PROCESS_STDIO_MAXBUFFER")
+      throw {
+        status: 0,
+        error: {
+          message: `failed at testcase 1`,
+          casespassed: 0,
+          err: String(err),
+        },
+      }; //E0
+    if (language == "java") throw parseErrors(err, jobId); //E1
+    else if (language == "py" || language == "python")
+      throw parseErrorsPy(err, jobId); //E1
     throw err;
   }
 
   let maxExecutionTime = 0;
   for (const [i, testcase] of testcases.entries()) {
     const inputFile = await writeInputToFile(testcase.testin, i);
-    const { stdout, executionTime } = await cmdExe(exeString(inputFile));
-    maxExecutionTime = Math.max(maxExecutionTime, executionTime);
-    const cmpOut = JSON.stringify(
-      stdout.replaceAll("\r\n", "\n").replace(/^\n|\n$/g, "")
-    );
-    const cmpTestOut = JSON.stringify(testcase.testout.replace(/^\n|\n$/g, ""));
-    if (cmpOut === cmpTestOut) {
-      continue;
+    try {
+      const { stdout, executionTime } = await cmdExe(
+        exeString(inputFile),
+        true
+      );
+      maxExecutionTime = Math.max(maxExecutionTime, executionTime);
+      const cmpOut = JSON.stringify(
+        stdout.replaceAll("\r\n", "\n").replace(/^\n|\n$/g, "")
+      );
+      const cmpTestOut = JSON.stringify(
+        testcase.testout.replace(/^\n|\n$/g, "")
+      );
+      if (cmpOut === cmpTestOut) {
+        continue;
+      }
+      throw {
+        status: 2,
+        error: { message: `failed at testcase ${i + 1}`, casespassed: i },
+      };
+    } catch (err) {
+      if (err.killed || err.code == "ERR_CHILD_PROCESS_STDIO_MAXBUFFER")
+        throw {
+          status: 0,
+          error: {
+            message: `failed at testcase ${i + 1} TLE`,
+            casespassed: i,
+            err: String(err),
+          },
+        }; //E0
+      throw err;
     }
-    console.log("CASE:", i, cmpOut === cmpTestOut);
-    console.log("Expected:\n", cmpTestOut);
-    console.log("Output:\n", cmpOut);
-    console.log("Length of Expected:", cmpTestOut.length);
-    console.log("Length of Output:", cmpOut.length);
-    throw { status: 2, error: `failed at testcase ${i + 1}` };
   }
-  return maxExecutionTime;
+  return { casespassed: testcases.length, exeTime: maxExecutionTime };
 };
+/*
+E0:: TLE
+E1::Compilation error
+E2:: Testcase failed
+*/
