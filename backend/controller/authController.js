@@ -176,9 +176,26 @@ export const isLogin = async (req, res) => {
 
 export const logoutUser = (req, res) => {
   try {
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
-
+    const newAccessToken = jwt.sign({}, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1ms", // 1 hour
+    });
+    const accessTokenOptions = {
+      expires: new Date(Date.now() - 2 * 60 * 60 * 1000), // Expires 1 hour ago
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    };
+    res.cookie("accessToken", newAccessToken, accessTokenOptions);
+    const newRefreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: "1ms", // 1 hour
+    });
+    const refreshTokenOptions = {
+      expires: new Date(Date.now() - 2 * 60 * 60 * 1000), // Expires 1 hour ago
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    };
+    res.cookie("refreshToken", newRefreshToken, refreshTokenOptions);
     return res.status(200).json({ message: "Logout successful" });
   } catch (err) {
     console.error("Error logging out:", err);
