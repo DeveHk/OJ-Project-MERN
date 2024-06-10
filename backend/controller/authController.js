@@ -94,13 +94,15 @@ export const loginUser = async (req, res) => {
     const accessTokenOptions = {
       expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1 hour
       httpOnly: true,
-      //sameSite: "strict",
+      sameSite: "None",
+      secure: true,
     };
 
     const refreshTokenOptions = {
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
       httpOnly: true,
-      //sameSite: "strict",
+      sameSite: "None",
+      secure: true,
     };
     res
       .status(200)
@@ -139,7 +141,8 @@ export const refreash = async (req, res) => {
       const accessTokenOptions = {
         expires: new Date(Date.now() + 1 * 60 * 60 * 1000), // 1 hour
         httpOnly: true,
-        //sameSite: "strict",
+        sameSite: "None",
+        secure: true,
       };
       res.cookie("accessToken", newAccessToken, accessTokenOptions).json({
         message: "Access token refreshed",
