@@ -37,7 +37,7 @@ const DashSubmissionPanel = () => {
   const [submission, setSubmission] = useState<SubmissionData | null>(null);
   const apicall = async () => {
     try {
-      const res = await axios.get(`${BACKENDURL}:5000/user/submissions`, {
+      const res = await axios.get(`${BACKENDURL}/user/submissions`, {
         withCredentials: true,
       });
       console.log(res);

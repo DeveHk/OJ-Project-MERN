@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKENDURL } from "./api";
+import { BACKENDURL, BACKENDURLOJ } from "./api";
 
 export interface SolutionRun {
     lang: string;
@@ -15,7 +15,7 @@ export interface SolutionSubmit {
 const apicallcompile = async (data: SolutionRun) => {
     const res = await axios.post(
         //`http://51.20.74.63:8000/compiler/run`, data, {
-        `${BACKENDURL}:8000/compiler/run`, data, {
+        `${BACKENDURLOJ}/compiler/run`, data, {
         withCredentials: true
     }
     );
@@ -24,7 +24,7 @@ const apicallcompile = async (data: SolutionRun) => {
 
 const apicallsubmit = async (data: SolutionSubmit) => {
     const res = await axios.post(
-        `${BACKENDURL}:8000/compiler/submit`, data, {
+        `${BACKENDURLOJ}/compiler/submit`, data, {
         withCredentials: true
     }
     );
@@ -34,7 +34,7 @@ const apicallsubmit = async (data: SolutionSubmit) => {
 export const apicall = async (id: string | null) => {
     try {
         const res = await axios.get(
-            `${BACKENDURL}:5000/question/read/${id}`
+            `${BACKENDURL}/question/read/${id}`
         );
         console.log(res);
         return res

@@ -16,7 +16,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       // Make a request to the logout endpoint
-      const res = await axios.get(`${BACKENDURL}:5000/auth/logout`, {
+      const res = await axios.get(`${BACKENDURL}/auth/logout`, {
         withCredentials: true,
       });
       console.log(res);

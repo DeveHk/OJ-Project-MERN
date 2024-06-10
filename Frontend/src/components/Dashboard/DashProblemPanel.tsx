@@ -37,7 +37,7 @@ const DashProblemPanel = ({
   const [loading, setLoading] = useState(false);
   const apicall = async () => {
     try {
-      const res = await axios.get(`${BACKENDURL}:5000/problem/read`, {
+      const res = await axios.get(`${BACKENDURL}/problem/read`, {
         withCredentials: true,
       });
       console.log(res);
@@ -51,7 +51,7 @@ const DashProblemPanel = ({
     try {
       setLoading(true);
       const res = await axios.put(
-        `${BACKENDURL}:5000/problem/disable/${problemId}`,
+        `${BACKENDURL}/problem/disable/${problemId}`,
         {}, // Put requests need a body, even if empty
         {
           withCredentials: true,

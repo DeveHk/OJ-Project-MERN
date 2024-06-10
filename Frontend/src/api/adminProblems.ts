@@ -3,7 +3,7 @@ import { BACKENDURL } from "./api";
 const apicalls = async () => {
     try {
         const res = await axios.get(
-            `${BACKENDURL}:5000/problem/read`,//http://localhost
+            `${BACKENDURL}/problem/read`,//http://localhost
             {
                 withCredentials: true,
             }

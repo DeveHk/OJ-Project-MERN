@@ -48,7 +48,7 @@ export interface ApiResponseData1 {
 const apicalls = async (num: number): Promise<ApiResponseData1> => {
     try {
         const res = await axios.post(
-            `${BACKENDURL}:5000/question/read`, {
+            `${BACKENDURL}/question/read`, {
             page: num
         },
         );
@@ -63,7 +63,7 @@ const apicalls = async (num: number): Promise<ApiResponseData1> => {
 export const apicall = async (id: string | null): Promise<ApiResponseData> => {
     try {
         const res = await axios.get(
-            `${BACKENDURL}:5000/question/read/${id}`
+            `${BACKENDURL}/question/read/${id}`
         );
         return res.data;
     } catch (err) {

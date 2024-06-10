@@ -5,7 +5,7 @@ import { z } from "zod";
 import { BACKENDURL } from "@/api/api";
 export default function DashCreateProblem() {
   const api = (values: z.infer<typeof formSchema>) => {
-    return axios.post(`${BACKENDURL}:5000/problem/create`, values, {
+    return axios.post(`${BACKENDURL}/problem/create`, values, {
       withCredentials: true,
     });
   };

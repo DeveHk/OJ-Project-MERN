@@ -22,7 +22,7 @@ export default function Profile() {
   const [mounted, setMounted] = useState(false);
   const apicall = async () => {
     try {
-      const res = await axios.get(`${BACKENDURL}:5000/user/profile`, {
+      const res = await axios.get(`${BACKENDURL}/user/profile`, {
         withCredentials: true,
       });
       console.log(res);

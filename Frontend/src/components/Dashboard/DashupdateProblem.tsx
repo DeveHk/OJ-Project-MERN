@@ -25,12 +25,9 @@ export default function DashUpdateProblem({
   const [mounted, setMounted] = useState(false);
   const apicall = async () => {
     try {
-      const res = await axios.get(
-        `${BACKENDURL}:5000/problem/read/${problem}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.get(`${BACKENDURL}/problem/read/${problem}`, {
+        withCredentials: true,
+      });
       console.log(res);
       setActiveproblems({
         title: res.data.problem.title,
@@ -52,7 +49,7 @@ export default function DashUpdateProblem({
     }
   };
   const api = (values: z.infer<typeof formSchema>) => {
-    return axios.put(`${BACKENDURL}:5000/problem/update/${problem}`, values, {
+    return axios.put(`${BACKENDURL}/problem/update/${problem}`, values, {
       withCredentials: true,
     });
   };

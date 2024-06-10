@@ -12,7 +12,7 @@ const DashboardRoute = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(`${BACKENDURL}:5000/auth/islogin`, {
+        const response = await axios.get(`${BACKENDURL}/auth/islogin`, {
           withCredentials: true,
         });
         console.log("[response]", response);

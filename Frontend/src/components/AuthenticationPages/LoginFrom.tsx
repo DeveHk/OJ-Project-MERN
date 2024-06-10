@@ -46,13 +46,9 @@ const LoginFrom = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setValid(true);
     try {
-      const response = await axios.post(
-        `${BACKENDURL}:5000/auth/login`,
-        values,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(`${BACKENDURL}/auth/login`, values, {
+        withCredentials: true,
+      });
       console.log("Login Sucessfull:", response.data);
       toast({
         title: "Login Successfull",
