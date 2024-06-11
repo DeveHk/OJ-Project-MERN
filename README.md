@@ -30,6 +30,7 @@ An online judge platform hosting coding problems and challenges. Users solve a s
 ## 🎨 Platform Visuals
 
 ![Landing page](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/Landing.png?raw=true)
+![Landing regiser](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/dark-register.png?raw=true)
 
 ## 🔄 Workflow
 
