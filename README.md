@@ -1,6 +1,6 @@
 # 🖥️ Online Judge Platform
 
-An online judge platform hosting coding problems and challenges. Participants solve a series of coding problems within a specified timeframe, typically ranging from a few hours to a few days. Before the competition begins, participants register for the event. During the challenge, they submit their solutions through the platform. Once submitted, these solutions are evaluated against hidden test cases by the platform. Based on the results of these tests, participants are assigned scores. The platform provides the infrastructure to manage and execute the competitions, ensuring fair and impartial evaluation.
+An online judge platform hosting coding problems and challenges. Users solve a series of coding problems. First he has to begin with registration for his accound, user can register as admin or user(member). During problem solving, they submit their solutions through the platform. Once submitted, these solutions are evaluated against hidden test cases by the platform. Based on the results of these tests, user solution submission is assigned verdict. The platform provides the infrastructure to manage and execute the DSA coding problems, ensuring fair and impartial evaluation.
 
 ## 🌟 Features
 
@@ -27,9 +27,11 @@ An online judge platform hosting coding problems and challenges. Participants so
   - zod
   - zustand
 
-## 🎨 High-Level Design
+## 🎨 Platform Visuals
 
-![High-Level Design](path/to/your/design-image.png)
+![Landing page](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/Landing.png?raw=true)
+![Landing page](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/Landing.png?raw=true)
+![Landing page](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/Landing.png?raw=true)
 
 ## 🔄 Workflow
 
@@ -62,5 +64,5 @@ An online judge platform hosting coding problems and challenges. Participants so
 
 - **AI-Based RAG Model**: Assist users with an AI-based model that embeds problems and user solutions. Using an LLM model, generate natural language responses to help users learn better and solve problems more efficiently.
 
-## 🖼️ Adding Images to README
+
 
