@@ -42,11 +42,14 @@ interface Problem {
   statement: string;
   active: boolean;
   testCases: [Testcase];
+  tags: [{ value: string }];
 }
 export default function Problemform({
   defaultvalue,
+  update = false,
   api,
 }: {
+  update: boolean;
   defaultvalue: null | Problem;
   api: (
     values: z.infer<typeof formSchema>
@@ -88,15 +91,20 @@ export default function Problemform({
     statement: editorState,
     active: true,
     testCases: [{ testin: "", testout: "", visible: true }],
+    tags: [{ value: "" }],
   };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultvalue || defaultval,
   });
   const { control } = form;
-  const { fields, append, remove } = useFieldArray({
+  const tc = useFieldArray({
     control,
-    name: "testCases",
+    name: "testCases", //
+  });
+  const tags = useFieldArray({
+    control,
+    name: "tags",
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -188,11 +196,15 @@ export default function Problemform({
                   Difficulty Level
                 </Label>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(val) => {
+                    //tags.update(0, { value: val });
+                    //console.log(tags.fields.at(0), val);
+                    field.onChange(val);
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger disabled={update}>
                       <SelectValue placeholder="Select a level" />
                     </SelectTrigger>
                   </FormControl>
@@ -202,12 +214,89 @@ export default function Problemform({
                     <SelectItem value="Easy">Easy</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription></FormDescription>
+                <FormDescription>Can not be modified latter</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+        <div className="">
+          <Label className="text-sm font-medium ">Tags</Label>
+          <div className="flex gap-4 flex-row mt-2  flex-wrap">
+            {tags.fields.map((field, index) => (
+              <div
+                className="flex items-center justify-center gap-1 "
+                id={field.id}
+                key={index}
+              >
+                <FormField
+                  control={form.control}
+                  name={`tags.${index}.value`}
+                  render={({ field }) => (
+                    <FormItem className="">
+                      <FormControl>
+                        <Input
+                          className="resize-none rounded-md border border-gray-300 w-32 px-3 h-8  py-2 overflow-auto text-sm shadow-sm focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50 dark:focus:border-gray-50 dark:focus:ring-gray-50"
+                          id={`test-input-${index}`}
+                          placeholder={
+                            //index == 0 ? "Select Difficulty" :
+                            "Enter Tag"
+                          }
+                          disabled={
+                            defaultvalue &&
+                            update &&
+                            index < defaultvalue?.tags.length
+                              ? true
+                              : false
+                          }
+                          required
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription></FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div
+                  onClick={() => {
+                    if (
+                      !(
+                        defaultvalue &&
+                        update &&
+                        index < defaultvalue?.tags.length
+                      )
+                    )
+                      tags.remove(index);
+                  }}
+                  className={cn(
+                    "cursor-pointer items-center mb-2",
+                    index == 0 ? "hidden" : "flex"
+                  )}
+                >
+                  <div className="justify-self-start  mr-1">
+                    <TiDeleteOutline className="h-5 w-5 text-red-600" />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <div className="mb-2 flex items-center">
+              <Button
+                type="button"
+                variant={"outline"}
+                onClick={() => tags.append({ value: "" })}
+                className="p-2 h-4 w-4 rounded"
+              >
+                +
+              </Button>
+            </div>
+          </div>
+          <FormDescription>
+            Tags Onece submitted can not me removed
+          </FormDescription>
+        </div>
+
         <FormField
           control={form.control}
           name="statement"
@@ -241,7 +330,7 @@ export default function Problemform({
           )}
         />
         <div className="">
-          {fields.map((field, index) => (
+          {tc.fields.map((field, index) => (
             <div className="flex flex-col" key={index}>
               <div className="">
                 <Label className=" col-span-2" htmlFor="test-case-visible">
@@ -278,7 +367,7 @@ export default function Problemform({
                 </div>
                 <div
                   onClick={() => {
-                    remove(index);
+                    tc.remove(index);
                   }}
                   className={cn(
                     "cursor-pointer items-center ",
@@ -360,7 +449,7 @@ export default function Problemform({
               type="button"
               variant={"outline"}
               onClick={() =>
-                append({ testin: "", testout: "", visible: false })
+                tc.append({ testin: "", testout: "", visible: false })
               }
               className="p-2  rounded"
             >

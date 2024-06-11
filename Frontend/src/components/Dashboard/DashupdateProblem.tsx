@@ -15,6 +15,7 @@ interface Problem {
   statement: string;
   active: boolean;
   testCases: [Testcase];
+  tags: [{ value: string }];
 }
 export default function DashUpdateProblem({
   problem,
@@ -41,6 +42,7 @@ export default function DashUpdateProblem({
             visible: testcase.visible,
           };
         }),
+        tags: res.data.problem.tags,
       });
       console.log(activeproblems);
       setMounted(true);
@@ -65,7 +67,7 @@ export default function DashUpdateProblem({
       </div>
       <div className="border shadow-sm rounded-lg p-6">
         {mounted && activeproblems && (
-          <Problemform defaultvalue={activeproblems} api={api} />
+          <Problemform defaultvalue={activeproblems} update={true} api={api} />
         )}
       </div>
     </main>

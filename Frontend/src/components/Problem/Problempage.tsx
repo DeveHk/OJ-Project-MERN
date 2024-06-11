@@ -85,7 +85,7 @@ export default function ProblemSinglePage({
   );
 
   return (
-    <div className="flex flex-col  h-[100vh]">
+    <div className="flex flex-col flex-wrap h-[100vh]">
       <Layout model={model} factory={factory} />
     </div>
   );

@@ -15,7 +15,7 @@ export default function DashCreateProblem() {
         <h1 className="font-semibold text-lg md:text-2xl">Create Problem</h1>
       </div>
       <div className="border shadow-sm rounded-lg p-6">
-        <Problemform defaultvalue={null} api={api} />
+        <Problemform update={false} defaultvalue={null} api={api} />
       </div>
     </main>
   );

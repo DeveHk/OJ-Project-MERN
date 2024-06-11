@@ -1,5 +1,9 @@
 import axios from "axios";
 import { BACKENDURL } from "./api";
+export interface tags {
+    value: string
+    _id: string
+}
 
 export interface Problem {
     _id: string;
@@ -11,6 +15,7 @@ export interface Problem {
     testcasecount: number;
     createdAt: string;
     updatedAt: string;
+    tags: tags[]
     __v: number;
 }
 export interface ApiResponse {
@@ -41,7 +46,6 @@ export interface ApiResponseData1 {
     success: boolean;
     message: string;
     problems: Problem[];
-    testcases: TestCase[]
 }
 
 
@@ -54,6 +58,35 @@ const apicalls = async (num: number): Promise<ApiResponseData1> => {
         );
         console.log(res);
         return res.data
+    }
+    catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+export const apicalltagproblems = async (num: number, tags: tags[] | null | undefined): Promise<ApiResponseData1> => {
+    try {
+        const res = await axios.post(
+            `${BACKENDURL}/question/read/tags`, {
+            tags: tags,
+            page: num
+        },
+        );
+        console.log(res);
+        return res.data
+    }
+    catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+export const apicalltags = async (): Promise<tags[]> => {
+    try {
+        const res = await axios.get(
+            `${BACKENDURL}/question/get/tags`
+        );
+        console.log(res);
+        return res.data.data
     }
     catch (err) {
         console.log(err);

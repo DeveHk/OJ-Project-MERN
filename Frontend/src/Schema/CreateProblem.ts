@@ -5,6 +5,9 @@ const testCaseSchema = z.object({
     testout: z.string().min(1, "Test output is required"),
     visible: z.boolean().default(false),
 });
+const tagSchema = z.object({
+    value: z.string().min(1, "Add some tag"),
+});
 const formSchema = z.object({
     title: z
         .string()
@@ -12,6 +15,7 @@ const formSchema = z.object({
     active: z.boolean().default(true),
     difficulty: z.string(),
     statement: z.string(),
+    tags: z.array(tagSchema).min(1, "At least Tag is required"),
     testCases: z.array(testCaseSchema).min(1, "At least one test case is required"),
 });
 export { formSchema };

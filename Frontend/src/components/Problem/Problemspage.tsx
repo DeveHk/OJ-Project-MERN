@@ -13,34 +13,61 @@ import {
 } from "@/components/ui/pagination";
 import { useEffect, useState } from "react";
 import { CiBoxList } from "react-icons/ci";
-import apicalls from "@/api/problemUser";
+import apicalls, { apicalltags, tags } from "@/api/problemUser";
 import { Problem } from "@/api/problemUser";
 import { FaArrowRight, FaFilter } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Tagactivity from "./Tagactivity";
+import { TagFilterModal } from "./TagFilterModal";
 
 export default function ProblemsPage() {
   const [pagenumber, setPagenumber] = useState(1);
+  const [tags, setTags] = useState<tags[] | null>();
+  const [activetags, setActiveTags] = useState<tags[] | null>();
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [isopen, setIsopen] = useState<boolean>(false);
   const getproblems = async () => {
     const res = await apicalls(pagenumber);
     if (res) setProblems(res?.problems);
     console.log(res);
     console.log(problems);
   };
+  const gettags = async () => {
+    const tagary = await apicalltags();
+    console.log("problempag", tagary);
+    if (tagary) setTags(tagary);
+  };
   useEffect(() => {
+    gettags();
     getproblems();
   }, [pagenumber]);
 
   return (
     <main className="container mx-auto px-4 md:px-6 py-12 md:py-16 lg:py-20">
       <div className="grid gap-6 md:gap-8 lg:gap-10">
+        {tags && (
+          <TagFilterModal
+            pagenumber={pagenumber}
+            setProblems={setProblems}
+            isOpen={isopen}
+            setOpen={setIsopen}
+            tags={tags}
+            setTags={setTags}
+            activetags={activetags}
+            setActiveTags={setActiveTags}
+          ></TagFilterModal>
+        )}
         <div className="grid gap-4 md:gap-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
               Coding Problems
             </h1>
             <div className="flex items-center gap-4">
-              <Button size="sm" variant="outline">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setIsopen(true)}
+              >
                 <FaFilter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
@@ -50,6 +77,10 @@ export default function ProblemsPage() {
               </Button>
             </div>
           </div>
+          <Tagactivity
+            setIsopen={setIsopen}
+            activetags={activetags}
+          ></Tagactivity>
           <div className="grid gap-4 md:gap-6">
             {problems.map((problem, i) => (
               <Card
@@ -66,8 +97,17 @@ export default function ProblemsPage() {
                       <Badge className="px-2 py-1 text-sm" variant="secondary">
                         {problem.difficulty}
                       </Badge>
-                      <div className="text-gray-500 dark:text-gray-400 text-sm">
-                        Problems Tags to be added
+                      <div className="text-gray-500 flex gap-2 dark:text-gray-400 text-sm">
+                        {problem.tags.map((tag) => {
+                          return (
+                            <Badge
+                              className="px-2 py-1 cursor-pointer text-sm bg-green-300/20 "
+                              variant="outline"
+                            >
+                              {tag.value}
+                            </Badge>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -83,48 +123,50 @@ export default function ProblemsPage() {
             ))}
           </div>
         </div>
-        <div className="flex justify-center">
-          <Pagination>
-            <PaginationContent>
-              {pagenumber > 1 && (
-                <>
-                  <PaginationItem
-                    onClick={() => {
-                      setPagenumber(pagenumber - 1);
-                    }}
-                  >
-                    <PaginationPrevious to="#" />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink to="#">{pagenumber - 1}</PaginationLink>
-                  </PaginationItem>
-                </>
-              )}
-              <PaginationItem>
-                <PaginationLink to="#" isActive>
-                  {pagenumber}
-                </PaginationLink>
-              </PaginationItem>
-              {problems.length == 4 && (
-                <>
-                  <PaginationItem>
-                    <PaginationLink to="#">{pagenumber + 1}</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                  <PaginationItem
-                    onClick={() => {
-                      setPagenumber(pagenumber + 1);
-                    }}
-                  >
-                    <PaginationNext to="#" />
-                  </PaginationItem>
-                </>
-              )}
-            </PaginationContent>
-          </Pagination>
-        </div>
+        {(!activetags || activetags.length == 0) && (
+          <div className="flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                {pagenumber > 1 && (
+                  <>
+                    <PaginationItem
+                      onClick={() => {
+                        setPagenumber(pagenumber - 1);
+                      }}
+                    >
+                      <PaginationPrevious to="#" />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink to="#">{pagenumber - 1}</PaginationLink>
+                    </PaginationItem>
+                  </>
+                )}
+                <PaginationItem>
+                  <PaginationLink to="#" isActive>
+                    {pagenumber}
+                  </PaginationLink>
+                </PaginationItem>
+                {problems.length == 4 && (
+                  <>
+                    <PaginationItem>
+                      <PaginationLink to="#">{pagenumber + 1}</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                    <PaginationItem
+                      onClick={() => {
+                        setPagenumber(pagenumber + 1);
+                      }}
+                    >
+                      <PaginationNext to="#" />
+                    </PaginationItem>
+                  </>
+                )}
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </main>
   );

@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaCode, FaMountain } from "react-icons/fa";
 import { BACKENDURL } from "@/api/api";
+import { ModeToggle } from "./Toggle";
 export default function Navbar() {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -29,7 +30,7 @@ export default function Navbar() {
   if (isLoading) return null;
   return (
     <header className="sticky z-10 top-0 flex  py-2 w-full shrink-0 bg-white/40 dark:bg-black/40 backdrop-blur-[15px] items-center px-4 md:px-6">
-      <div className="w-full flex items-center h-full justify-between ">
+      <div className="w-full mr-10 flex items-center h-full justify-between ">
         <Link className="flex gap-2 h-full justify-center items-center " to="/">
           <FaCode className="h-6 w-6" />
           <span className="sr-only">Online Judge</span>
@@ -39,7 +40,7 @@ export default function Navbar() {
           <NavigationMenuList>
             <NavigationMenuLink asChild>
               <Link
-                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900  focus:text-gray-900 dark:focus:text-gray-200   focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50   dark:hover:text-gray-50  dark:data-[active]:bg-gray-100 dark:data-[state=open]:bg-gray-800/50"
                 to="/"
               >
                 Home
@@ -47,7 +48,7 @@ export default function Navbar() {
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
               <Link
-                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900  focus:text-gray-900 dark:focus:text-gray-200  focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50   dark:hover:text-gray-50  dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
                 to="#"
               >
                 About
@@ -55,7 +56,7 @@ export default function Navbar() {
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
               <Link
-                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900  focus:text-gray-900 dark:focus:text-gray-200  focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50   dark:hover:text-gray-50  dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
                 to="/problems"
               >
                 Problems
@@ -63,7 +64,7 @@ export default function Navbar() {
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
               <Link
-                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100/40 hover:text-gray-900 focus:bg-gray-100/40 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900  focus:text-gray-900 dark:focus:text-gray-200  focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50   dark:hover:text-gray-50  dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
                 to="#"
               >
                 Challenges
@@ -95,6 +96,7 @@ export default function Navbar() {
             </Button>
           </>
         )}
+        <ModeToggle></ModeToggle>
         <Sheet>
           <SheetTrigger asChild>
             <Button className="lg:hidden h-6" size="icon" variant="outline">
