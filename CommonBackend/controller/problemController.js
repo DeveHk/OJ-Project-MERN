@@ -1,19 +1,34 @@
 import Problem from "../models/Problem.js";
+import Tags from "../models/Tags.js";
 import Testcase from "../models/Testcase.js";
 
 export const createproblem = async (req, res) => {
   console.log("[PROCEEDED createproblem]");
   try {
-    const { title, difficulty, statement, testCases, active } = req.body;
+    const { title, difficulty, statement, testCases, active, tags } = req.body;
+    console.log(tags);
     const newProblem = await Problem.create({
       u_id: req.user._id,
       title,
       difficulty,
+      tags,
       description: statement,
       testcasecount: testCases.length,
       active,
     });
+    await Tags.updateOne(
+      { value: difficulty },
+      { $addToSet: { problems: newProblem._id } },
+      { upsert: true }
+    );
     console.log(newProblem);
+    const tagsPromises = tags.map(async (tag) => {
+      return Tags.updateOne(
+        { value: tag.value },
+        { $addToSet: { problems: newProblem._id } },
+        { upsert: true }
+      );
+    });
     const testCasePromises = testCases.map((tc) => {
       return Testcase.create({
         problem_id: newProblem._id,
@@ -22,10 +37,11 @@ export const createproblem = async (req, res) => {
         visible: tc.visible,
       });
     });
+    await Promise.all(tagsPromises);
     await Promise.all(testCasePromises);
 
     res.status(201).json({
-      message: "Problem and test cases created successfully",
+      message: "Problem, tags and test cases created successfully",
       problem: newProblem,
     });
   } catch (err) {
@@ -84,7 +100,7 @@ export const updateproblem = async (req, res) => {
   try {
     const problemId = req.params.problemId; // Get problemId from params
     const userId = req.user._id; // Assuming `authenticateToken` middleware sets `req.user`
-    const { title, difficulty, statement, testCases, active } = req.body;
+    const { title, difficulty, statement, testCases, active, tags } = req.body;
 
     // Find the problem by its ID
     const problem = await Problem.findOne({ _id: problemId });
@@ -104,6 +120,7 @@ export const updateproblem = async (req, res) => {
           title,
           difficulty,
           description: statement,
+          tags,
           testcasecount: testCases.length,
           active,
         },
@@ -115,7 +132,13 @@ export const updateproblem = async (req, res) => {
     // Remove existing test cases
     await Testcase.deleteMany({ problem_id: problemId });
 
-    // Create new test cases
+    const tagsPromises = tags.map(async (tag) => {
+      return Tags.updateOne(
+        { value: tag.value },
+        { $addToSet: { problems: updatedProblem._id } },
+        { upsert: true }
+      );
+    });
     const testCasePromises = testCases.map((tc) => {
       return Testcase.create({
         problem_id: updatedProblem._id,
@@ -124,6 +147,8 @@ export const updateproblem = async (req, res) => {
         visible: tc.visible,
       });
     });
+
+    await Promise.all(tagsPromises);
     await Promise.all(testCasePromises);
     // console.log(testCasePromises);
     //console.log(updatedProblem);

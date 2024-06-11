@@ -12,5 +12,11 @@ router.get(
   authorizationUser,
   submissionHandler
 );
+router.get(
+  "/submissions/:prob_id",
+  authorizationJWT,
+  authorizationUser,
+  submissionHandler
+);
 
 export default router;

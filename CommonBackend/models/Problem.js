@@ -1,5 +1,12 @@
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
+const tagSchema = new mongoose.Schema({
+  value: {
+    type: String,
+    default: null,
+    required: true,
+  },
+});
 
 const problemSchema = new mongoose.Schema(
   {
@@ -31,6 +38,15 @@ const problemSchema = new mongoose.Schema(
     },
     testcasecount: {
       type: Number,
+      default: null,
+      required: true,
+    },
+    tags: {
+      type: [
+        {
+          value: String,
+        },
+      ],
       default: null,
       required: true,
     },
