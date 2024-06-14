@@ -20,5 +20,5 @@ app.use("/compiler", compilerRouter);
 app.use("/", testRouter);
 
 app.listen(process.env.PORT, () => {
-  console.log("[SERVER COMPILER RUNNNING]");
+  //console.log("[SERVER COMPILER RUNNNING]");
 });

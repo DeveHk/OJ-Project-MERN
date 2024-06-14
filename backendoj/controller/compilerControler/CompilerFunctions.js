@@ -101,9 +101,9 @@ export const execute = async (filepathcode, language, inputValue) => {
   try {
     const outputPromises = inputValue.map(async (input, i) => {
       const inputFile = await writeInputToFile(input, i);
-      console.log(inputFile);
+      //console.log(inputFile);
       const { stdout } = await cmdExe(exeString(inputFile), true);
-      console.log(stdout);
+      //console.log(stdout);
       return stdout;
     });
     const outputValue = await Promise.all(outputPromises);

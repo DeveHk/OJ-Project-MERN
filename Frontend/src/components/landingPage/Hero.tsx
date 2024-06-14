@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
-import AnimatedCanvasDark from "./AmimatedCanvas";
+import { HashLink  } from 'react-router-hash-link';
+import AnimatedCanvasDark from './AmimatedCanvas';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <section className="h-screen py-12 md:py-24 lg:py-32 xl:py-48 ">
-      {<AnimatedCanvasDark />}
-      <div className=" h-full flex flex-col justify-center items-center  px-4 md:px-6">
-        <div className="flex max-w-[300px] sm:max-w-[400px]  space-y-4 md:max-w-[600px] flex-col justify-center">
+    <section className="h-screen py-12 md:py-24 lg:py-32 xl:py-48">
+      <AnimatedCanvasDark />
+      <div className="h-full flex flex-col justify-center items-center px-4 md:px-6">
+        <div className="flex max-w-[300px] sm:max-w-[400px] space-y-4 md:max-w-[600px] flex-col justify-center">
           <div className="space-y-3 justify-center flex-col items-center">
             <div className="text-2xl sm:text-3xl text-white tracking-wider md:text-5xl xl:text-6xl/none">
               Conquer Coding Challenges, Elevate Your Skills
@@ -25,17 +26,19 @@ const Hero = () => {
             >
               Start Coding
             </Link>
-            <Link
-              className="inline-flex h-8 items-center justify-center rounded-md border   border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50  dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
-              to="#"
+            <HashLink
+              className="inline-flex h-8 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
+              to="/#about"
+              smooth
             >
               Learn More
-            </Link>
+            </HashLink>
           </div>
         </div>
       </div>
     </section>
   );
 };
+
 
 export default Hero;

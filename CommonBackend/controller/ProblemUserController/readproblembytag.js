@@ -8,7 +8,7 @@ export const readproblemsbytag = async (req, res) => {
     if (!tagIds || tagIds.length === 0) {
       return await readproblems(req, res);
     }
-    console.log(typeof tagIds, tagIds);
+    //console.log(typeof tagIds, tagIds);
     const objectIds = await Promise.all(
       tagIds.map(async (id) => {
         return new mongoose.Types.ObjectId(id._id);
@@ -18,7 +18,7 @@ export const readproblemsbytag = async (req, res) => {
     const tags = await Tags.find({
       _id: { $in: objectIds },
     });
-    console.log(tags);
+    //console.log(tags);
     const problemIds = [
       ...new Set(
         tags.flatMap((tag) =>

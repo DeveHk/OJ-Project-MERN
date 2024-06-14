@@ -8,11 +8,11 @@ const apicalls = async () => {
                 withCredentials: true,
             }
         );
-        console.log(res);
+        //console.log(res);
         return res
     }
     catch (err) {
-        console.log(err);
+        //console.log(err);
         return err
     }
 }

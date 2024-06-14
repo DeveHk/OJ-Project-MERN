@@ -15,7 +15,7 @@ const DashboardRoute = () => {
         const response = await axios.get(`${BACKENDURL}/auth/islogin`, {
           withCredentials: true,
         });
-        console.log("[response]", response);
+        //console.log("[response]", response);
         setMounted(true);
         if (response.data.isAuthenticated) {
           setIsAdmin(response.data.user.isAdmin);

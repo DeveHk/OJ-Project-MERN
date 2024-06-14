@@ -41,10 +41,10 @@ const CodePanel = () => {
       const res = await apicallcompile(data);
       setOutput(res?.data?.output[0]);
       setVal("output");
-      console.log("[successful]", res, output);
+      //console.log("[successful]", res, output);
       setError("");
     } catch (err) {
-      console.log("[Unsuccessful]", err);
+      //console.log("[Unsuccessful]", err);
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 400) {
           if (err.response?.data.error.status == 1) {
@@ -79,7 +79,7 @@ const CodePanel = () => {
       setloading(false);
       setRunning(false);
     }
-    console.log(data);
+    //console.log(data);
   };
   const onSubmit = async () => {
     setCasepassed(-1);
@@ -94,16 +94,16 @@ const CodePanel = () => {
     try {
       setVal("console");
       const res = await apicallsubmit(data);
-      console.log("[Successful]", res);
+      //console.log("[Successful]", res);
       setError("SOLUTION SUBMITTED");
       toast({
-        title: "Solution Submitted",
+        title: "Solution Submitted ",
         description: "Congratulations on a successful submission!!",
       });
       setCasepassed(res.data?.submission.casespassed);
       setlastwa(0);
     } catch (err) {
-      console.log("[Unsuccessful]", err);
+      //console.log("[Unsuccessful]", err);
       if (axios.isAxiosError(err)) {
         if (err.response?.status == 400) {
           if (err.response?.data.error.status == 0) {
@@ -141,7 +141,7 @@ const CodePanel = () => {
       setloading(false);
       setSubmitting(false);
     }
-    console.log(data);
+    //console.log(data);
   };
   return (
     <div className="h-full md:py-0 py-2 overflow-y-scroll no-scrollbar bg-white shadow-md dark:bg-transparent">

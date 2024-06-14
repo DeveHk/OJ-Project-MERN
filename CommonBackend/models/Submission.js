@@ -17,6 +17,11 @@ const submissionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    casespassed:{
+      type: Number,
+      default: 0,
+      required: true,
+    },
     code_ref: {
       type: String,
       default: null,

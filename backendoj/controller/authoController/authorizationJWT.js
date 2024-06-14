@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { refreash } from "./refreash.js";
 
 export const authorizationJWT = async (req, res, next) => {
-  console.log("[PROCEEDED authorizationJWT]");
+  //console.log("[PROCEEDED authorizationJWT]");
   const accessToken = req.cookies.accessToken;
   const refreshToken = req.cookies.refreshToken;
   if (refreshToken) {
@@ -22,7 +22,7 @@ export const authorizationJWT = async (req, res, next) => {
         }
       );
     } else {
-      console.log("[NOT EXISTS authorizationJWT]");
+      //console.log("[NOT EXISTS authorizationJWT]");
       refreash(req, res, next);
     }
   } else {

@@ -107,11 +107,11 @@ export default function Problemform({
     name: "tags",
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    //console.log(values);
     setValid(true);
     try {
       const res = await api(values);
-      console.log(res);
+      //console.log(res);
       toast({
         title: `Problem ${defaultvalue ? "Updated" : "Created"} Successfully`,
         description: "You will be redirected to Dashboard",
@@ -128,14 +128,14 @@ export default function Problemform({
             });
           }
         } else if (err.response && err.response.status == 403) {
-          console.log("[LOGIN REDIRECT]");
+          //console.log("[LOGIN REDIRECT]");
           return navigate("/login");
         }
         setValid(false);
       } else {
         console.error("Unexpected error:", err);
       }
-      console.log("Unexpected error:", err);
+      //console.log("Unexpected error:", err);
     }
   }
   return (
@@ -198,7 +198,7 @@ export default function Problemform({
                 <Select
                   onValueChange={(val) => {
                     //tags.update(0, { value: val });
-                    //console.log(tags.fields.at(0), val);
+                    ////console.log(tags.fields.at(0), val);
                     field.onChange(val);
                   }}
                   defaultValue={field.value}

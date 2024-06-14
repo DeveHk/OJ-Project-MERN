@@ -35,16 +35,18 @@ const DashProblemPanel = ({
   const [problems, setProblems] = useState<Problem[]>([]);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [opensub, setOpensub] = useState(false);
+
   const apicall = async () => {
     try {
       const res = await axios.get(`${BACKENDURL}/problem/read`, {
         withCredentials: true,
       });
-      console.log(res);
+      //console.log(res);
       setProblems(res.data.problems);
       setMounted(true);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
   const disableProblemApiCall = async (problemId: string) => {
@@ -60,12 +62,12 @@ const DashProblemPanel = ({
       const newProblems = problems.map((problem) =>
         problem._id === problemId ? res.data.problems : problem
       );
-      console.log(newProblems, res);
+      //console.log(newProblems, res);
       setProblems(newProblems);
-      console.log(res);
+      //console.log(res);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
   useEffect(() => {
@@ -82,9 +84,9 @@ const DashProblemPanel = ({
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
-                <TableHead>Description</TableHead>
                 <TableHead>Difficulty</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Submissions</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -98,14 +100,9 @@ const DashProblemPanel = ({
                       <Skeleton className="w-[60px] h-[20px] rounded-full" />
                     )}
                   </TableCell>
-                  <TableCell>
-                    {" "}
-                    {mounted ? (
-                      problem.description?.slice(0, 50)
-                    ) : (
-                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
-                    )}
-                  </TableCell>
+
+
+
                   <TableCell>
                     {mounted ? (
                       problem.difficulty
@@ -129,6 +126,21 @@ const DashProblemPanel = ({
                     ) : (
                       <Skeleton className="w-[60px] h-[20px] rounded-full" />
                     )}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setActive("submissions")
+                          setEditproblem(problem._id);
+                        }}
+                      >
+                        View
+                      </Button>
+
+                    </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">

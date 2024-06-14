@@ -1,6 +1,6 @@
 import express from "express";
 import { profileHandler } from "../controller/userControler/Profile.js";
-import { submissionHandler } from "../controller/userControler/Submission.js";
+import { submissionHandlerbyprob, submissionHandlerbyprobiduserid, submissionHandlerbyuserid } from "../controller/userControler/Submission.js";
 import { authorizationJWT } from "../controller/authoController/authorizationJWT.js";
 import { authorizationUser } from "../controller/authoController/authorizationUser.js";
 const router = express.Router();
@@ -10,13 +10,20 @@ router.get(
   "/submissions",
   authorizationJWT,
   authorizationUser,
-  submissionHandler
+  submissionHandlerbyuserid
 );
 router.get(
   "/submissions/:prob_id",
   authorizationJWT,
   authorizationUser,
-  submissionHandler
+  submissionHandlerbyprobiduserid
+);
+
+router.get(
+  "/submissions/all/:prob_id",
+  authorizationJWT,
+  authorizationUser,
+  submissionHandlerbyprob
 );
 
 export default router;

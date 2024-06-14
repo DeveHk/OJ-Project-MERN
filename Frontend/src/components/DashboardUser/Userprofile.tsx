@@ -25,12 +25,12 @@ export default function Profile() {
       const res = await axios.get(`${BACKENDURL}/user/profile`, {
         withCredentials: true,
       });
-      console.log(res);
+      //console.log(res);
       setUser(res.data.user);
       setProblems(res.data.problem);
       setMounted(true);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
   useEffect(() => {

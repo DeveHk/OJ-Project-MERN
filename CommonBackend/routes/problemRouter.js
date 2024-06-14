@@ -5,6 +5,7 @@ import {
   disableproblem,
   readProblem,
   readProblemall,
+  submissionHandlerbyprob,
   updateproblem,
 } from "../controller/problemController.js";
 import { authorizationAdmin } from "../controller/authoController/authorizationaAdmin.js";
@@ -14,6 +15,13 @@ const router = express.Router();
 router.post("/create", authorizationJWT, authorizationAdmin, createproblem);
 router.get("/read", authorizationJWT, authorizationAdmin, readProblemall);
 router.get("/read/:problemId", authorizationJWT, readProblem);
+router.get(
+  "/submissions/:problemId",
+  authorizationJWT,
+  authorizationAdmin,
+  submissionHandlerbyprob
+);
+
 router.put(
   "/disable/:problemId",
   authorizationJWT,

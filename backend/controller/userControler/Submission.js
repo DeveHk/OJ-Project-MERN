@@ -5,7 +5,7 @@ import Problem from "../../models/Problem.js";
 export const submissionHandler = async (req, res) => {
   try {
     const user_id = new ObjectId(req.user._id);
-    console.log(user_id);
+    //console.log(user_id);
     const submissions = await Submission.aggregate([
       {
         $match: {

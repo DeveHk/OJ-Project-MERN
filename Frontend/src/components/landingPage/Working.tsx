@@ -1,6 +1,6 @@
 const Working = () => {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-900">
+    <section id={'about'} className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-900">
       <div className="container px-4 md:px-6 max-w-[300px] sm:max-w-[400px]   space-y-4 md:max-w-[600px] lg:max-w-[1000px] ">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2 py-6  lg:max-w-[600px]">

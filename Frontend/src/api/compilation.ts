@@ -35,11 +35,11 @@ export const apicall = async (id: string | null) => {
         const res = await axios.get(
             `${BACKENDURL}/question/read/${id}`
         );
-        console.log(res);
+        //console.log(res);
         return res
     }
     catch (err) {
-        console.log(err);
+        //console.log(err);
         return err
     }
 }

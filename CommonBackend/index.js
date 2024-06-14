@@ -28,5 +28,5 @@ app.use("/user", userRouter);
 app.use("/", testRouter);
 
 app.listen(process.env.PORT, () => {
-  console.log("[SERVER COMPILER RUNNNING]");
+  //console.log("[SERVER COMPILER RUNNNING]");
 });

@@ -85,7 +85,7 @@ const RegisterFrom = () => {
     setValid(true);
     try {
       const response = await axios.post(`${BACKENDURL}/auth/register`, values);
-      console.log("Data saved successfully:", response.data);
+      //console.log("Data saved successfully:", response.data);
       toast({
         title: "User Registered",
         description: "You will be redirected to Login page",
@@ -114,7 +114,7 @@ const RegisterFrom = () => {
     }
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    //console.log(values);
   }
 
   return (

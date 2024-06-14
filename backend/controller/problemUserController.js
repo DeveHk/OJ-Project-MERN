@@ -29,7 +29,7 @@ export const readproblems = async (req, res) => {
 export const readproblem = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
+    //console.log(id);
     if (!id) {
       return res.status(404).json({
         message: "[no id given]",

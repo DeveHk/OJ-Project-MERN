@@ -16,6 +16,7 @@ import { SubmissionModal } from "./SubmissionModal";
 import { Button } from "../ui/button";
 import { Link, useParams } from "react-router-dom";
 import { BACKENDURL } from "@/api/api";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 export interface SubmissionData {
   _id: string;
   code_ref: string;
@@ -33,9 +34,13 @@ export interface SubmissionData {
 const SubmissionProblemPanel = () => {
   const { problemId } = useParams();
   const [problems, setProblems] = useState<SubmissionData[]>([]);
+  const [problemsall, setProblemsall] = useState<SubmissionData[]>([]);
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
+  
+  const [userid, setUserid] = useState<string>("");
   const [submission, setSubmission] = useState<SubmissionData | null>(null);
+  const [val, setVal] = useState<string>("mysubmissions");
   const apicall = async () => {
     try {
       const res = await axios.get(
@@ -44,128 +49,275 @@ const SubmissionProblemPanel = () => {
           withCredentials: true,
         }
       );
-      console.log(res);
+      const resall = await axios.get(
+        `${BACKENDURL}/user/submissions/all/${problemId}`,
+        {
+          withCredentials: true,
+        }
+      );
+      if(res.data.submissions && res.data.submissions.length>0){setUserid(res.data.submissions[0].user_id)
+      }
       setProblems(res.data.submissions);
+      setProblemsall(resall.data.submissions);
       setMounted(true);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
+
   useEffect(() => {
     if (problems.length == 0) apicall();
   }, []);
   return (
-    <div className="flex flex-col">
-      {submission && (
-        <SubmissionModal
-          submission={submission}
-          isOpen={open}
-          setOpen={setOpen}
-        ></SubmissionModal>
-      )}
-      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-        <div className="flex items-center">
-          <h1 className="font-semibold text-lg md:text-2xl text-black dark:text-white">Submissions</h1>
-        </div>
-        <div className="text-black dark:text-white border shadow-sm rounded-lg">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>id</TableHead>
-                <TableHead>Problem</TableHead>
-                <TableHead>Verdict</TableHead>
-                <TableHead>language</TableHead>
-                <TableHead>Time</TableHead>
-                <TableHead>View</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {problems.map((problem, i) => (
-                <TableRow key={i}>
-                  <TableCell className="font-medium">
-                    {mounted ? (
-                      <div
-                        className="hover:cursor-pointer hover:text-gray-900"
-                        onClick={() => {
-                          setSubmission(problem);
-                          setOpen(true);
-                        }}
-                      >
-                        {problem._id.slice(-10)}
-                      </div>
-                    ) : (
-                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
-                    )}
-                  </TableCell>
+    <Tabs
+      value={val}
+      onValueChange={(value) => {
+        setVal(value);
+      }}
+      className="w-full "
+    >
+      <TabsList className="grid w-full   grid-cols-2 ">
+        <TabsTrigger value="mysubmissions">My Submissions</TabsTrigger>
+        <TabsTrigger value="submissions">All Submissions</TabsTrigger>
 
-                  <TableCell className="hover:text-blue-800">
-                    {" "}
-                    {mounted ? (
-                      <Link
-                        to={`/problems/${problem.prob_id}`}
-                        className="h-full w-full flex items-center"
-                      >
-                        {" "}
-                        {problem.prob_id.slice(-10, -1)}
-                      </Link>
-                    ) : (
-                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {mounted ? (
-                      <Badge
-                        className={cn(
-                          problem.verdict
-                            ? "bg-green-100 text-green-900 dark:bg-green-900/20 dark:text-green-400"
-                            : "bg-red-100 text-red-900 dark:bg-red-900/20 dark:text-red-400"
+      </TabsList>
+      <TabsContent value="mysubmissions" className="">
+        <div className="flex flex-col">
+          {submission && (
+            <SubmissionModal
+              submission={submission}
+              isOpen={open}
+              setOpen={setOpen}
+            ></SubmissionModal>
+          )}
+          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+            <div className="flex items-center">
+              <h1 className="font-semibold text-lg md:text-2xl text-black dark:text-white">My Submissions</h1>
+            </div>
+            <div className="text-black dark:text-white border shadow-sm rounded-lg dark:bg-gray-900">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>id</TableHead>
+                    <TableHead>Verdict</TableHead>
+                    <TableHead>Exe. Time</TableHead>
+                    <TableHead>language</TableHead>
+                    <TableHead>Time</TableHead>
+                    <TableHead>View</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {problems.map((problem, i) => (
+                    <TableRow key={i}>
+                      <TableCell className="font-medium">
+                        {mounted ? (
+                          <div
+                            className="hover:cursor-pointer dark:hover:text-gray-300 hover:text-gray-900"
+                            onClick={() => {
+                              setSubmission(problem);
+                              setOpen(true);
+                            }}
+                          >
+                            {problem._id.slice(-10)}
+                          </div>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
                         )}
-                        variant="outline"
-                      >
-                        {problem.verdict ? "Accepted" : "Failed"}
-                      </Badge>
-                    ) : (
-                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {mounted ? (
-                      problem.language
-                    ) : (
-                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
-                    )}
-                  </TableCell>
+                      </TableCell>
 
-                  <TableCell>
-                    {mounted ? (
-                      problem.createdAt
-                    ) : (
-                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {mounted ? (
-                      <Button
-                        variant={"outline"}
-                        onClick={() => {
-                          setSubmission(problem);
-                          setOpen(true);
-                        }}
-                        className="h-4"
-                      >
-                        View
-                      </Button>
-                    ) : (
-                      <Skeleton className="w-[60px] h-[20px] rounded-full" />
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                      <TableCell>
+                        {mounted ? (
+                          <Badge
+                            className={cn(
+                              problem.verdict
+                                ? "bg-green-100 text-green-900 dark:bg-green-900/20 dark:text-green-400"
+                                : "bg-red-100 text-red-900 dark:bg-red-900/20 dark:text-red-400"
+                            )}
+                            variant="outline"
+                          >
+                            {problem.verdict ? "Accepted" : "Failed"}
+                          </Badge>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {mounted ? (
+                          <Badge
+                            className={cn(
+                              problem.verdict
+                                ? "bg-green-100 text-green-900 dark:bg-green-900/20 dark:text-green-400"
+                                : "bg-red-100 text-red-900 dark:bg-red-900/20 dark:text-red-400 ", "w-14 flex justify-center"
+                            )}
+                            variant="outline"
+                          >
+                            {problem.execution_time} ms
+                            
+                          </Badge>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {mounted ? (
+                          problem.language
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+
+                      <TableCell>
+                        {mounted ? (
+                          problem.createdAt
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {mounted ? (
+                          <Button
+                            variant={"outline"}
+                            onClick={() => {
+                              setSubmission(problem);
+                              setOpen(true);
+                            }}
+                            className="h-4"
+                          >
+                            View
+                          </Button>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </main>
         </div>
-      </main>
-    </div>
+      </TabsContent>
+      <TabsContent value="submissions">
+        <div className="flex flex-col">
+          {submission && (
+            <SubmissionModal
+              submission={submission}
+              isOpen={open}
+              setOpen={setOpen}
+            ></SubmissionModal>
+          )}
+          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+            <div className="flex items-center">
+              <h1 className="font-semibold text-lg md:text-2xl text-black dark:text-white">All Submissions</h1>
+            </div>
+            <div className="text-black dark:text-white border shadow-sm rounded-lg dark:bg-gray-900">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>id</TableHead>
+                    <TableHead>Verdict</TableHead>
+                    <TableHead>Time</TableHead>
+                    <TableHead>language</TableHead>
+                    <TableHead>Time</TableHead>
+                    <TableHead>View</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {problemsall.map((problem, i) =>{
+                    return(
+                      <TableRow key={i} className={cn((userid==problem.user_id)?"bg-green-200/20 hover:bg-green-300/20":"")}>
+                      <TableCell className="font-medium">
+                        {mounted ? (
+                          <div
+                            className="hover:cursor-pointer hover:text-gray-900"
+                            onClick={() => {
+                              setSubmission(problem);
+                              setOpen(true);
+                            }}
+                          >
+                            {problem._id.slice(-10)}
+                          </div>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+
+                      
+                      <TableCell>
+                        {mounted ? (
+                          <Badge
+                            className={cn(
+                              problem.verdict
+                                ? "bg-green-100 text-green-900 dark:bg-green-900/20 dark:text-green-400"
+                                : "bg-red-100 text-red-900 dark:bg-red-900/20 dark:text-red-400"
+                            )}
+                            variant="outline"
+                          >
+                            {problem.verdict ? "Accepted" : "Failed"}
+                          </Badge>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {mounted ? (
+                          <Badge
+                            className={cn(
+                              problem.verdict
+                                ? "bg-green-100 text-green-900 dark:bg-green-900/20 dark:text-green-400"
+                                : "bg-red-100 text-red-900 dark:bg-red-900/20 dark:text-red-400 ", "w-20 flex justify-center"
+                            )}
+                            variant="outline"
+                          >
+                            {problem.execution_time.slice(0,5)} ms
+                            
+                          </Badge>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {mounted ? (
+                          problem.language
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+
+                      <TableCell>
+                        {mounted ? (
+                          problem.createdAt
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {mounted ? (
+                          <Button
+                            variant={"outline"}
+                            onClick={() => {
+                              setSubmission(problem);
+                              setOpen(true);
+                            }}
+                            className="h-4"
+                          >
+                            View
+                          </Button>
+                        ) : (
+                          <Skeleton className="w-[60px] h-[20px] rounded-full" />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          </main>
+        </div>
+      </TabsContent>
+    </Tabs>
+
   );
 };
 

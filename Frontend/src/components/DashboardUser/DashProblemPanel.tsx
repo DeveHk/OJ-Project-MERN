@@ -40,11 +40,11 @@ const DashSubmissionPanel = () => {
       const res = await axios.get(`${BACKENDURL}/user/submissions`, {
         withCredentials: true,
       });
-      console.log(res);
+      //console.log(res);
       setProblems(res.data.submissions);
       setMounted(true);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
   useEffect(() => {

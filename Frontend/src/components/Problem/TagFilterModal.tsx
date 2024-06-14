@@ -40,12 +40,12 @@ export function TagFilterModal({
   const getnewprob = async () => {
     const res = await apicalltagproblems(pagenumber, activetags);
     if (res) setProblems(res?.problems);
-    console.log("[tagres]", res);
+    //console.log("[tagres]", res);
   };
   const getnewprobempty = async () => {
     const res = await apicalltagproblems(pagenumber, []);
     if (res) setProblems(res?.problems);
-    console.log("[tagres]", res);
+    //console.log("[tagres]", res);
 
     setTags((prevTags) => [...(prevTags ?? []), ...(activetags ?? [])]);
     setActiveTags([]);

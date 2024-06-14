@@ -4,7 +4,7 @@ import Problem from "../../models/Problem.js";
 
 export const profileHandler = async (req, res) => {
   try {
-    console.log("[USER DATA]", req.user);
+    //console.log("[USER DATA]", req.user);
     const user = {
       username: req.user.username,
       fname: req.user.fname,
@@ -13,7 +13,7 @@ export const profileHandler = async (req, res) => {
       createdAt: req.user.createdAt,
     };
     const user_id = new ObjectId(req.user._id);
-    console.log(user_id);
+    //console.log(user_id);
     const problemarr = await Submission.find({ user_id }).distinct("prob_id");
     const problem = await Problem.find(
       { _id: { $in: problemarr } },

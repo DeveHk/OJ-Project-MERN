@@ -26,5 +26,5 @@ app.use("/user", userRouter);
 app.use("/", testRouter);
 
 app.listen(process.env.PORT, () => {
-  console.log("[running]");
+  //console.log("[running]");
 });

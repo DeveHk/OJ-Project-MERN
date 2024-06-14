@@ -29,7 +29,7 @@ export default function DashUpdateProblem({
       const res = await axios.get(`${BACKENDURL}/problem/read/${problem}`, {
         withCredentials: true,
       });
-      console.log(res);
+      //console.log(res);
       setActiveproblems({
         title: res.data.problem.title,
         statement: res.data.problem.description,
@@ -44,10 +44,10 @@ export default function DashUpdateProblem({
         }),
         tags: res.data.problem.tags,
       });
-      console.log(activeproblems);
+      //console.log(activeproblems);
       setMounted(true);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
   const api = (values: z.infer<typeof formSchema>) => {

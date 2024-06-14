@@ -56,11 +56,11 @@ const apicalls = async (num: number): Promise<ApiResponseData1> => {
             page: num
         },
         );
-        console.log(res);
+        //console.log(res);
         return res.data
     }
     catch (err) {
-        console.log(err);
+        //console.log(err);
         throw err;
     }
 }
@@ -72,11 +72,11 @@ export const apicalltagproblems = async (num: number, tags: tags[] | null | unde
             page: num
         },
         );
-        console.log(res);
+        //console.log(res);
         return res.data
     }
     catch (err) {
-        console.log(err);
+        //console.log(err);
         throw err;
     }
 }
@@ -85,11 +85,11 @@ export const apicalltags = async (): Promise<tags[]> => {
         const res = await axios.get(
             `${BACKENDURL}/question/get/tags`
         );
-        console.log(res);
+        //console.log(res);
         return res.data.data
     }
     catch (err) {
-        console.log(err);
+        //console.log(err);
         throw err;
     }
 }

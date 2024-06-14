@@ -10,9 +10,9 @@ export const compiler = async (req, res) => {
       });
     }
     const filepath = generateFile(lang, code);
-    console.log(filepath, "[INTPUJT]:", inputValue);
+    //console.log(filepath, "[INTPUJT]:", inputValue);
     const output = await execute(filepath, lang, inputValue);
-    console.log(output);
+    //console.log(output);
     return res.status(200).json({
       success: true,
       message: "[Successful]",

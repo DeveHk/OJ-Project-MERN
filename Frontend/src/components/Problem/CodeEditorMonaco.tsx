@@ -63,7 +63,7 @@ const CodeEditor = ({
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
-    console.log("Monaco editor mounted: ", monaco);
+    //console.log("Monaco editor mounted: ", monaco);
   };
 
   const handleEditorChange = (value: string | undefined) => {

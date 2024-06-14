@@ -1,7 +1,7 @@
 export const authorizationAdmin = async (req, res, next) => {
-  console.log("[PROCEEDED authorizationAdmin]");
+  //console.log("[PROCEEDED authorizationAdmin]");
   try {
-    console.log(req.user);
+    //console.log(req.user);
     if (req.user.isAdmin == true) next();
     else {
       return res.status(403).send({

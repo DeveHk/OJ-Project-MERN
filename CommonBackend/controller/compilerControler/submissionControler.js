@@ -38,14 +38,14 @@ export const submission = async (req, res) => {
   const filepath = generateFile(lang, code);
 
   const testcases = await Testcase.find({ problem_id: prob_id });
-  console.log(filepath, "[INTPUJT]:", testcases);
+  //console.log(filepath, "[INTPUJT]:", testcases);
   try {
     const { casespassed, exeTime } = await executeCheck(
       filepath,
       lang,
       testcases
     );
-    console.log(exeTime);
+    //console.log(exeTime);
     const submission = await storeSubmission(
       prob_id,
       filepath,

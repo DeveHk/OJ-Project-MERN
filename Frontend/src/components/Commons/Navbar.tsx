@@ -12,6 +12,8 @@ import axios from "axios";
 import { FaCode, FaMountain } from "react-icons/fa";
 import { BACKENDURL } from "@/api/api";
 import { ModeToggle } from "./Toggle";
+import { HashLink } from "react-router-hash-link";
+import { useToast } from "../ui/use-toast";
 export default function Navbar() {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -20,12 +22,13 @@ export default function Navbar() {
       const res = await axios.get(`${BACKENDURL}/auth/logout`, {
         withCredentials: true,
       });
-      console.log(res);
+      //console.log(res);
       navigate("/login");
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
+  const {toast}=useToast()
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return null;
   return (
@@ -47,12 +50,12 @@ export default function Navbar() {
               </Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
-              <Link
+              <HashLink
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900  focus:text-gray-900 dark:focus:text-gray-200  focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50   dark:hover:text-gray-50  dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                to="#"
+                smooth to="/#about"
               >
                 About
-              </Link>
+              </HashLink>
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
               <Link
@@ -66,6 +69,10 @@ export default function Navbar() {
               <Link
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900  focus:text-gray-900 dark:focus:text-gray-200  focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50   dark:hover:text-gray-50  dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
                 to="#"
+                onClick={()=>{ toast({
+                  title: "Coming Soon",
+                  description: "Challenges feature is currently under development",
+                });}}
               >
                 Challenges
               </Link>
@@ -116,12 +123,12 @@ export default function Navbar() {
               >
                 Home
               </Link>
-              <Link
+              <HashLink
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                to="#"
+                 smooth to="/#about"
               >
                 About
-              </Link>
+              </HashLink>
               <Link
                 className="flex w-full items-center py-2 text-lg font-semibold"
                 to="/problems"
@@ -130,6 +137,10 @@ export default function Navbar() {
               </Link>
               <Link
                 className="flex w-full items-center py-2 text-lg font-semibold"
+                onClick={()=>{ toast({
+                  title: "Coming Soon",
+                  description: "Challenges feature is currently under development",
+                });}}
                 to="#"
               >
                 Challenges

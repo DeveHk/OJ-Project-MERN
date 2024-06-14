@@ -3,6 +3,7 @@ import DashProblemPanel from "./DashProblemPanel";
 import DashnavAdmin from "./DashnavAdmin";
 import { useState } from "react";
 import DashUpdateProblem from "./DashupdateProblem";
+import DashSubmisions from "./DashSubmisions";
 /**interface Problem {
   _id: string;
   u_id: string;
@@ -26,6 +27,7 @@ export default function Dashboard() {
       )}
       {active == "create" && <DashCreateProblem />}
       {active == "edit" && <DashUpdateProblem problem={editproblem} />}
+      {active == "submissions" && <DashSubmisions problem={editproblem} />}
     </div>
   );
 }

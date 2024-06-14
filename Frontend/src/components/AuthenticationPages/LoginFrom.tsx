@@ -49,7 +49,7 @@ const LoginFrom = () => {
       const response = await axios.post(`${BACKENDURL}/auth/login`, values, {
         withCredentials: true,
       });
-      console.log("Login Sucessfull:", response.data);
+      //console.log("Login Sucessfull:", response.data);
       toast({
         title: "Login Successfull",
         description: "You will be redirected to Landing page",
@@ -57,7 +57,7 @@ const LoginFrom = () => {
       navigate("/");
       return;
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status == 404) {
           if (error.response.data == "NO USER FOUND") {
@@ -77,7 +77,7 @@ const LoginFrom = () => {
         console.error("Unexpected error:", error);
       }
     }
-    console.log(values);
+    //console.log(values);
   }
 
   return (

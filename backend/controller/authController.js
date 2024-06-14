@@ -25,7 +25,7 @@ export const registerUser = async (req, res) => {
       u_id: user._id,
       password: hashedPassword,
     });
-    console.log("[User Saved]", user, key);
+    //console.log("[User Saved]", user, key);
 
     //4. Response User
     const resUser = {
@@ -34,7 +34,7 @@ export const registerUser = async (req, res) => {
     };
     res.status(200).send(resUser);
   } catch (err) {
-    console.log("[ERROR IN SAVING DATA]", err);
+    //console.log("[ERROR IN SAVING DATA]", err);
     if (err.code == 11000)
       if (err.keyPattern["email"] !== undefined)
         return res.status(400).send({ message: "[USER EXISTS]", on: "email" });
@@ -110,7 +110,7 @@ export const loginUser = async (req, res) => {
       .cookie("refreshToken", refreshToken, refreshTokenOptions)
       .json(resUser);
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     return res.status(500).send({ message: "[SERVER ERROR]", err });
   }
 };
@@ -150,7 +150,7 @@ export const refreash = async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     return res.status(500).send({ message: "[SERVER ERROR]", err });
   }
 };
@@ -165,7 +165,7 @@ export const isLogin = async (req, res) => {
         if (err) {
           return res.json({ isAuthenticated: false, err });
         }
-        console.log(user);
+        //console.log(user);
         return res.json({ isAuthenticated: true, user });
       }
     );

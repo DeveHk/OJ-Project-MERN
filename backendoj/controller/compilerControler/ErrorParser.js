@@ -6,7 +6,7 @@ export function parseErrors(errorLog, filename) {
   const errorCount = errorLines.length;
 
   const formattedErrors = errorLines.map((line) => {
-    console.log(filename);
+    //console.log(filename);
     return line.split(filename)[1];
   });
 
@@ -25,7 +25,7 @@ export function parseErrorsPy(errorLog, filename) {
   const errorCount = errorLines.length;
 
   const formattedErrors = errorLines.map((line) => {
-    console.log(filename);
+    //console.log(filename);
     return line.split(filename)[1];
   });
 

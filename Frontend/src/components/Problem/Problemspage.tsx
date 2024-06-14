@@ -29,12 +29,12 @@ export default function ProblemsPage() {
   const getproblems = async () => {
     const res = await apicalls(pagenumber);
     if (res) setProblems(res?.problems);
-    console.log(res);
-    console.log(problems);
+    //console.log(res);
+    //console.log(problems);
   };
   const gettags = async () => {
     const tagary = await apicalltags();
-    console.log("problempag", tagary);
+    //console.log("problempag", tagary);
     if (tagary) setTags(tagary);
   };
   useEffect(() => {

@@ -2,7 +2,7 @@ import User from "../../models/User.js";
 import jwt from "jsonwebtoken";
 
 export const refreash = async (req, res, next) => {
-  console.log("[PROCEEDED refreash]");
+  //console.log("[PROCEEDED refreash]");
   try {
     //1. Take token
     const refreshToken = req.cookies.refreshToken;
@@ -42,7 +42,7 @@ export const refreash = async (req, res, next) => {
       }
     );
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     return res.status(500).send({ message: "[SERVER ERROR]", err });
   }
 };
