@@ -29,7 +29,7 @@ export default function Navbar() {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return null;
   return (
-    <header className="sticky z-10 top-0 flex  py-2 w-full shrink-0 bg-white/40 dark:bg-black/40 backdrop-blur-[15px] items-center px-4 md:px-6">
+    <header className="sticky z-20 top-0 flex  py-2 w-full shrink-0 bg-white/40 dark:bg-black/40 backdrop-blur-[15px] items-center px-4 md:px-6">
       <div className="w-full mr-10 flex items-center h-full justify-between ">
         <Link className="flex gap-2 h-full justify-center items-center " to="/">
           <FaCode className="h-6 w-6" />
@@ -106,7 +106,7 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent side="left">
             <Link to="#">
-              <FaMountain className="h-6 w-6" />
+            <FaCode className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
             </Link>
             <div className="grid gap-2 py-6">

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Editor, { loader, OnMount } from "@monaco-editor/react";
 import { editor as monacoEditor } from "monaco-editor";
+import { useTheme } from "../provider/theme-provider";
 
 loader.init().then((monaco) => {
   monaco.editor.defineTheme("cd-game", {
@@ -48,16 +49,16 @@ const CodeEditor = ({
   lang,
   setCode,
   code,
-  theme,
+  activetheme,
 }: {
   code: string;
   lang: string;
-  theme: string;
+  activetheme: string;
   setCode: React.Dispatch<React.SetStateAction<string>>;
   disabled: boolean;
 }) => {
-  useEffect(() => {}, [lang]);
-
+  const {theme}=useTheme()
+  useEffect(() => {}, [lang,theme]);
   const editorRef = useRef<monacoEditor.IStandaloneCodeEditor | null>(null);
 
   const handleEditorDidMount: OnMount = (editor, monaco) => {
@@ -73,7 +74,7 @@ const CodeEditor = ({
     <Editor
       className="h-full w-full bg-gray-200 rounded-lg overflow-hidden"
       height={300}
-      theme={theme}
+      theme={activetheme}
       language={lang}
       value={code}
       onMount={handleEditorDidMount}

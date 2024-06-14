@@ -4,13 +4,16 @@ import ProblemPanel from "./ProblemPanel";
 import CodePanel from "./CodePanel";
 import axios from "axios";
 import { Model, Layout, TabNode } from "flexlayout-react";
+//for ligh mode theme
 import "flexlayout-react/style/light.css";
-
+//for darkmode theme
+import "flexlayout-react/style/dark.css";
 export default function ProblemSinglePage({
   problemId,
 }: {
   problemId: string | null;
 }) {
+
   const [problem, setProblem] = useState<Problem | null>(null);
   const [testcase, setTestcase] = useState<TestCase[]>([]);
   const [model] = useState<Model>(

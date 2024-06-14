@@ -15,7 +15,7 @@ const CodePanel = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [lang, setLang] = useState<string>("cpp");
-  const [theme, setTheme] = useState<string>("vs");
+  const [activetheme, setActivetheme] = useState<string>("vs");
   const [code, setCode] = useState<string>("");
   const [error, setError] = useState<string | null>("");
   const [output, setOutput] = useState("");
@@ -143,9 +143,8 @@ const CodePanel = () => {
     }
     console.log(data);
   };
-
   return (
-    <div className="md:h-[90vh] md:py-0 py-2 overflow-y-scroll no-scrollbar bg-white rounded-lg shadow-md dark:bg-gray-950">
+    <div className="h-full md:py-0 py-2 overflow-y-scroll no-scrollbar bg-white shadow-md dark:bg-transparent">
       <div className="p-6 space-y-5">
         <div className="grid gap-4">
           <div className="space-y-2 overflow-x-scroll">
@@ -162,17 +161,17 @@ const CodePanel = () => {
                 lang={lang}
                 setLang={setLang}
               />
-              <ThemeSelect theme={theme} setTheme={setTheme} />
+              <ThemeSelect theme={activetheme} setTheme={setActivetheme} />
             </div>
             <div
-              className="shadow-sm relative flex w-full overflow-x-scroll no-scrollbar"
+              className="shadow-sm relative flex w-full  no-scrollbar"
               style={{ height: "300px", overflowY: "auto" }}
             >
               <CodeEditor
                 setCode={setCode}
                 code={code}
                 lang={lang}
-                theme={theme}
+                activetheme={activetheme}
                 disabled={loading}
               ></CodeEditor>
             </div>
@@ -192,7 +191,7 @@ const CodePanel = () => {
         <div className="flex w-full gap-4 flex-col sm:flex-row">
           <Button
             variant={"outline"}
-            className="w-full h-8 bg-slate-200 hover:bg-slate-300"
+            className="w-full h-8 dark:bg-slate-800 dark:text-white bg-slate-200 text-black hover:bg-slate-300"
             onClick={() => {
               loading
                 ? toast({
@@ -208,7 +207,7 @@ const CodePanel = () => {
             </div>
           </Button>
           <Button
-            className="w-full h-8"
+            className="w-full h-8 dark:bg-slate-700 dark:text-white"
             onClick={() => {
               loading
                 ? toast({
@@ -218,7 +217,7 @@ const CodePanel = () => {
                 : onSubmit();
             }}
           >
-            <div className="gap-4 flex items-center">
+            <div className="gap-4  flex items-center">
               <span className="">
                 {submitting ? "Code Submitting" : "Submit"}
               </span>

@@ -25,7 +25,7 @@ export function SubmissionModal({
           <DialogTitle>Submission Details</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <div className="submission-details bg-gray-100 p-6 rounded-lg shadow-md">
+        <div className="submission-details dark:bg-gray-800 bg-gray-100 p-6 rounded-lg shadow-md">
           <div className="flex flex-col space-y-2">
             <div>
               <strong>Submission ID:</strong> {submission?._id.slice(-10)}

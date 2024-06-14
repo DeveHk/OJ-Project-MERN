@@ -19,8 +19,8 @@ export function ThemeSelect({
 }) {
   React.useEffect(() => {}, []);
   return (
-    <Select defaultValue={theme} onValueChange={(value) => setTheme(value)}>
-      <SelectTrigger className="w-[180px]">
+    <Select defaultValue={theme}  onValueChange={(value) => setTheme(value)}>
+      <SelectTrigger className="w-[180px] text-black dark:text-white">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
       <SelectContent>

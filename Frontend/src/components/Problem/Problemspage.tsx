@@ -83,9 +83,13 @@ export default function ProblemsPage() {
           ></Tagactivity>
           <div className="grid gap-4 md:gap-6">
             {problems.map((problem, i) => (
+              <Link
+              className=""
+              to={`/problems/${problem._id}` }  key={i}
+            >
               <Card
-                key={i}
-                className="p-4 md:p-6 flex items-center justify-between"
+               
+                className="p-2  md:p-6 flex items-center justify-between"
               >
                 <div className="flex items-center gap-4">
                   <div className="bg-[#55efc4] rounded-lg w-12 h-12 flex items-center justify-center text-2xl">
@@ -93,15 +97,15 @@ export default function ProblemsPage() {
                   </div>
                   <div className="grid gap-1">
                     <h3 className="text-lg font-semibold">{problem.title}</h3>
-                    <div className="flex items-center gap-2">
-                      <Badge className="px-2 py-1 text-sm" variant="secondary">
+                   
+                    <div className="text-gray-500 flex-wrap flex gap-2 dark:text-gray-400 text-sm">
+                      <Badge className=" px-1 md:px-2 md:py-1 text-xs md:text-sm  " variant="secondary">
                         {problem.difficulty}
                       </Badge>
-                      <div className="text-gray-500 flex gap-2 dark:text-gray-400 text-sm">
                         {problem.tags.map((tag) => {
                           return (
                             <Badge
-                              className="px-2 py-1 cursor-pointer text-sm bg-green-300/20 "
+                              className="px-1 md:px-2 md:py-1 text-xs md:text-sm cursor-pointer  bg-green-300/20 "
                               variant="outline"
                             >
                               {tag.value}
@@ -109,17 +113,18 @@ export default function ProblemsPage() {
                           );
                         })}
                       </div>
-                    </div>
                   </div>
                 </div>
                 <Link
-                  className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80"
+                  className="sm:inline-flex hidden  items-center gap-2 text-sm font-medium text-primary hover:text-primary/80"
                   to={`/problems/${problem._id}`}
                 >
+                  
                   View Problem
                   <FaArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
+              </Link>
             ))}
           </div>
         </div>

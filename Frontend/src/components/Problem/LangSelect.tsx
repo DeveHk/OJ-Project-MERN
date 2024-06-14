@@ -88,7 +88,7 @@ export function LangSelect({
       defaultValue={lang}
       onValueChange={(value) => handleLangChange(value as string)}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px] text-black dark:text-white">
         <SelectValue placeholder="language" />
       </SelectTrigger>
       <SelectContent>

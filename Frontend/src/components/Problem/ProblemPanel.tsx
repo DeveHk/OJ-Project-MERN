@@ -20,6 +20,7 @@ const ProblemPanel = ({
 }) => {
   const [val, setVal] = useState<string>("problem");
   return (
+    <div className="dark:bg-transparent px-2 no-scrollbar overflow-y-scroll bg-white h-full">
     <Tabs
       value={val}
       onValueChange={(value) => {
@@ -31,72 +32,57 @@ const ProblemPanel = ({
         <TabsTrigger value="problem">Problem</TabsTrigger>
         <TabsTrigger value="Submissions">Submissions</TabsTrigger>
       </TabsList>
-      <TabsContent value="problem">
+      <TabsContent value="problem" className="">
         <div className="md:h-[90vh] overflow-y-scroll no-scrollbar space-y-6">
-          <div className="bg-white rounded-lg shadow-md dark:bg-gray-950">
-            <div className="p-6 space-y-4">
-              <h1 className="text-2xl font-bold">{problem?.title}</h1>
-              <div className="flex items-center gap-2">
-                <div className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-md text-sm font-medium dark:bg-yellow-900 dark:text-yellow-200">
-                  {problem?.difficulty}
-                </div>
-                <div className="text-gray-500 flex gap-2 dark:text-gray-400 text-sm">
-                  {problem?.tags.map((tag) => {
-                    return (
-                      <Badge
-                        className="px-2 py-1 cursor-pointer text-sm bg-green-300/20 "
-                        variant="outline"
-                      >
-                        {tag.value}
-                      </Badge>
-                    );
-                  })}
+          <div className="bg-white rounded-lg shadow-md dark:bg-gray-800  p-6 space-y-4">
+            <h1 className="text-2xl dark:text-white text-black font-bold">{problem?.title}</h1>
+            <div className="text-gray-500 flex-wrap flex gap-2 dark:text-gray-400 text-sm">
+              <Badge className="bg-yellow-100 text-yellow-800 py-1 rounded-md font-medium dark:bg-yellow-900 dark:text-yellow-200 px-1 md:px-2 md:py-1 text-xs md:text-sm" variant="secondary">
+                {problem?.difficulty}
+              </Badge>
+              {problem?.tags.map((tag) => (
+                <Badge className="px-1 md:px-2 md:py-1 text-xs md:text-sm cursor-pointer bg-green-300/20" variant="outline">
+                  {tag.value}
+                </Badge>
+              ))}
+            </div>
+
+            <div className="text-gray-600 relative flex dark:text-gray-400 w-full">
+              <Markdown  className="markdown " remarkPlugins={[remarkGfm]}>
+                {problem?.description || ""}
+              </Markdown>
+            </div>
+
+            {testcase.length > 0 && (
+              <div className="text-black dark:text-gray-400  space-y-2 w-full">
+                <h3 className="text-lg font-semibold">Test Cases</h3>
+                <div className="space-y-1">
+                  {testcase.map((test, i) => (
+                    <div key={`${test.testin}-${i}`} className="bg-gray-100 px-4 py-2 rounded-md text-sm font-mono dark:bg-gray-900">
+                      <span className=" dark:text-gray-400">Input:</span>
+                      <div className="whitespace-pre-line break-words">{test.testin}</div>
+                      <br />
+                      <span className=" dark:text-gray-400">Output:</span>
+                      <div className="whitespace-pre-line break-words">{test.testout}</div>
+                      <br />
+                    </div>
+                  ))}
                 </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-400">
-                <Markdown className="markdown" remarkPlugins={[remarkGfm]}>
-                  {problem?.description || ""}
-                </Markdown>
-              </p>
-              {testcase.length > 0 && (
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Test Cases</h3>
-                  <div className="space-y-1">
-                    {testcase.length > 0 &&
-                      testcase.map((test, i) => (
-                        <div
-                          key={`${test.testin}-${i}`}
-                          className="bg-gray-100 px-4 py-2 rounded-md text-sm font-mono dark:bg-gray-800"
-                        >
-                          <span className="text-gray-500 dark:text-gray-400">
-                            Input:
-                          </span>
-                          <div className="whitespace-pre-line">
-                            {test.testin}
-                          </div>
-                          <br />
-                          <span className="text-gray-500 dark:text-gray-400">
-                            Output:
-                          </span>
-                          <div className="whitespace-pre-line">
-                            {test.testout}
-                          </div>
-                          <br />
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
+
         </div>
       </TabsContent>
       <TabsContent value="Submissions">
-        <div className="md:h-[90vh] overflow-y-scroll no-scrollbar space-y-6">
+      <div className="md:h-[90vh] overflow-y-scroll no-scrollbar space-y-6">
+      <div className="bg-white rounded-lg shadow-md dark:bg-gray-800 p-6 space-y-4">
           <SubmissionProblemPanel></SubmissionProblemPanel>
+        </div>
         </div>
       </TabsContent>
     </Tabs>
+    </div>
   );
 };
 
