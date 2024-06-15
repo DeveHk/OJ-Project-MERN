@@ -26,6 +26,38 @@ An online judge platform hosting coding problems and challenges. Users solve a s
   - react-hook-form
   - zod
   - zustand
+    
+## 🔄 Workflow
+
+### User:
+1. User logs in or registers.
+2. User navigates through problem lists, participates in contests, solves problems.
+3. User chooses a problem to solve.
+4. User submits code.
+5. Backend evaluates the code against test cases.
+6. Submissions are stored and can be accessed later.
+
+### Admin:
+1. Admin logs in or registers.
+2. Admin navigates through the dashboard.
+3. Admin can create and edit problems.
+4. Admin can change the status and test cases for the problems.
+5. Admin can host a contest and see results [Coming Soon].
+
+## 🚀 Deployment
+
+- **Backend**: Containerized and deployed to AWS EC2. [Link](https://harshworks.publicvm.com)
+- **Frontend**: Deployed on Vercel. [Link](https://oj-project-mern.vercel.app)
+## 🔧 Working On
+
+- Validating user email.
+- Features to host coding contests and ladders.
+- Enhancements to the user dashboard.
+
+## 🌐 Future Scope
+
+- **AI-Based RAG Model**: Assist users with an AI-based model that embeds problems and user solutions. Using an LLM model, generate natural language responses to help users learn better and solve problems more efficiently.
+
 
 ## 🎨 Platform Visuals
 ### Default Website (Light Theme)
@@ -253,37 +285,5 @@ An online judge platform hosting coding problems and challenges. Users solve a s
     </tr>
   </table>
 </div>
-    
-## 🔄 Workflow
-
-### User:
-1. User logs in or registers.
-2. User navigates through problem lists, participates in contests, solves problems.
-3. User chooses a problem to solve.
-4. User submits code.
-5. Backend evaluates the code against test cases.
-6. Submissions are stored and can be accessed later.
-
-### Admin:
-1. Admin logs in or registers.
-2. Admin navigates through the dashboard.
-3. Admin can create and edit problems.
-4. Admin can change the status and test cases for the problems.
-5. Admin can host a contest and see results [Coming Soon].
-
-## 🚀 Deployment
-
-- **Backend**: Containerized and deployed to AWS EC2. [Link](https://harshworks.publicvm.com)
-- **Frontend**: Deployed on Vercel. [Link](https://oj-project-mern.vercel.app)
-## 🔧 Working On
-
-- Validating user email.
-- Features to host coding contests and ladders.
-- Enhancements to the user dashboard.
-
-## 🌐 Future Scope
-
-- **AI-Based RAG Model**: Assist users with an AI-based model that embeds problems and user solutions. Using an LLM model, generate natural language responses to help users learn better and solve problems more efficiently.
-
 
 
