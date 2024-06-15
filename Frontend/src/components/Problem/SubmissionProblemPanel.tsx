@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import { SubmissionModal } from "./SubmissionModal";
 import { Button } from "../ui/button";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { BACKENDURL } from "@/api/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 export interface SubmissionData {

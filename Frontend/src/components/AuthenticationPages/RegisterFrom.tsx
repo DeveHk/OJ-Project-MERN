@@ -84,7 +84,7 @@ const RegisterFrom = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setValid(true);
     try {
-      const response = await axios.post(`${BACKENDURL}/auth/register`, values);
+       await axios.post(`${BACKENDURL}/auth/register`, values);
       //console.log("Data saved successfully:", response.data);
       toast({
         title: "User Registered",

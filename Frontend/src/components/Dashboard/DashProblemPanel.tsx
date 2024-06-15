@@ -35,7 +35,6 @@ const DashProblemPanel = ({
   const [problems, setProblems] = useState<Problem[]>([]);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [opensub, setOpensub] = useState(false);
 
   const apicall = async () => {
     try {

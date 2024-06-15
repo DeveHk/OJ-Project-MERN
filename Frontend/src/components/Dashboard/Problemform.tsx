@@ -110,7 +110,7 @@ export default function Problemform({
     //console.log(values);
     setValid(true);
     try {
-      const res = await api(values);
+      await api(values);
       //console.log(res);
       toast({
         title: `Problem ${defaultvalue ? "Updated" : "Created"} Successfully`,

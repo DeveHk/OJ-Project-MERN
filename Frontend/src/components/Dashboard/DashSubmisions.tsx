@@ -1,7 +1,4 @@
 import axios from "axios";
-import Problemform from "./Problemform";
-import { formSchema } from "@/Schema/CreateProblem";
-import { z } from "zod";
 import { useEffect, useState } from "react";
 import { BACKENDURL } from "@/api/api";
 import { SubmissionData, SubmissionModal } from "./SubmissionModal";
@@ -10,19 +7,7 @@ import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-interface Testcase {
-  testin: string;
-  testout: string;
-  visible: boolean;
-}
-interface Problem {
-  title: string;
-  difficulty: string;
-  statement: string;
-  active: boolean;
-  testCases: [Testcase];
-  tags: [{ value: string }];
-}
+
 export default function DashSubmisions({
   problem,
 }: {

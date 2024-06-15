@@ -61,7 +61,7 @@ const CodeEditor = ({
   useEffect(() => {}, [lang,theme]);
   const editorRef = useRef<monacoEditor.IStandaloneCodeEditor | null>(null);
 
-  const handleEditorDidMount: OnMount = (editor, monaco) => {
+  const handleEditorDidMount: OnMount = (editor) => {
     editorRef.current = editor;
     //console.log("Monaco editor mounted: ", monaco);
   };

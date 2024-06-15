@@ -9,7 +9,7 @@ import { IoMdMenu } from "react-icons/io";
 import useAuth from "../hooks/Auth";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaCode, FaMountain } from "react-icons/fa";
+import { FaCode } from "react-icons/fa";
 import { BACKENDURL } from "@/api/api";
 import { ModeToggle } from "./Toggle";
 import { HashLink } from "react-router-hash-link";
@@ -19,7 +19,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       // Make a request to the logout endpoint
-      const res = await axios.get(`${BACKENDURL}/auth/logout`, {
+      await axios.get(`${BACKENDURL}/auth/logout`, {
         withCredentials: true,
       });
       //console.log(res);
