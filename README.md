@@ -58,8 +58,48 @@ An online judge platform hosting coding problems and challenges. Users solve a s
   </table>
 </div>
 
-
-
+### Multi Theme Support Website (Dark Theme)
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/about.png?raw=true" alt="Landing page" style="width: 300px;"/>
+        <br />
+        <em>Figure 1: About Page</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/problem-n.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 2: Problem page</em>
+      </td>
+    </tr>
+        <tr>
+     <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/login.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 3.1: Login</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/register.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 3.2: Register</em>
+      </td>
+    </tr>
+     </tr>
+        <tr>
+     <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/select-tag.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 4: Tag Filter</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/problem-all-submision.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 5: Problem all Submissions</em>
+      </td>
+    </tr>
+  </table>
+</div>
 
 
 ## 🔄 Workflow
