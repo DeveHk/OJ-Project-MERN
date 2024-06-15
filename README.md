@@ -102,7 +102,7 @@ An online judge platform hosting coding problems and challenges. Users solve a s
 </div>
 
 
-### Differnt Dashboards for multiple roles 
+### Different Dashboards for multiple roles 
 #### User
 <div align="center">
   <table>
