@@ -273,8 +273,8 @@ An online judge platform hosting coding problems and challenges. Users solve a s
 
 ## 🚀 Deployment
 
-- **Backend**: Containerized and deployed to AWS EC2.
-
+- **Backend**: Containerized and deployed to AWS EC2. [Link](https://harshworks.publicvm.com)
+- **Frontend**: Deployed on Vercel. [Link](https://oj-project-mern.vercel.app)
 ## 🔧 Working On
 
 - Validating user email.
