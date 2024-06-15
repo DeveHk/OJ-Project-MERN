@@ -102,6 +102,158 @@ An online judge platform hosting coding problems and challenges. Users solve a s
 </div>
 
 
+### Differnt Dashboards for multiple roles 
+#### User
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboard/profile-user.png?raw=true" alt="Landing page" style="width: 300px;"/>
+        <br />
+        <em>Figure 1.1: User Profile</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboard/submission.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 1.2: User Submissions</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
+#### Admin
+<div align="center">
+  <table>
+   <tr>
+     <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboardadmin/problems.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 2.1: Admin Problems</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboardadmin/create.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 2.2: Admin Create Problem</em>
+      </td>
+    </tr>
+    <tr>
+           <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboardadmin/edit.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 2.3: Admin Edit Problem</em>
+      </td>
+          </td>
+           <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboardadmin/submissions.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 2.4: Admin Submissions of Problem</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+### Submissions in multiple Languages
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/lang/c.png?raw=true" alt="Landing page" style="width: 300px;"/>
+        <br />
+        <em>Figure 1: C</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/lang/cpp.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 2: C++</em>
+      </td>
+    </tr>
+        <tr>
+     <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/lang/java.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 3: java</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/lang/python.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 4: Python</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
+    
+### Supports multiple theme in code editor
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/theme/vs-dark.png?raw=true" alt="Landing page" style="width: 300px;"/>
+        <br />
+        <em>Figure 1: vs-dark</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/theme/rose.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 2: cd-rose (self defined)</em>
+      </td>
+    </tr>
+        <tr>
+     <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/theme/hc-black.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 3: hc-black</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/theme/game.png?raw=true" alt="Landing register" style="width: 300px;"/>
+        <br />
+        <em>Figure 4: cd-game (self defined)</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
+### Highly responsive UI
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/sm/landing.png?raw=true" alt="Landing page" style="width: 200px;"/>
+        <br />
+        <em>Figure 1: Landing</em>
+      </td>
+         <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/sm/sidenav.png?raw=true" alt="Landing register" style="width: 200px;"/>
+        <br />
+        <em>Figure 2: Side Nav</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/sm/problems.png?raw=true" alt="Landing register" style="width: 200px;"/>
+        <br />
+        <em>Figure 3: Problems Page</em>
+      </td>
+    </tr>
+        <tr>
+     <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/sm/dashboard/admin-problem.png?raw=true" alt="Landing register" style="width: 200px;"/>
+        <br />
+        <em>Figure 4.1: Admin dashboard</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/sm/dashboard/admin-submission.png?raw=true" alt="Landing register" style="width: 200px;"/>
+        <br />
+        <em>igure 4.2: Admin dashboard</em>
+      </td>
+           <td align="center">
+        <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/sm/dark/problem.png?raw=true" alt="Landing register" style="width: 200px;"/>
+        <br />
+        <em>igure 5: Problem Page</em>
+      </td>
+    </tr>
+  </table>
+</div>
+    
 ## 🔄 Workflow
 
 ### User:
