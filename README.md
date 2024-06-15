@@ -135,9 +135,11 @@ An online judge platform hosting coding problems and challenges. Users solve a s
 
 
 ### Different Dashboards for multiple roles 
-#### User
 <div align="center">
   <table>
+    <tr>
+    <th align="center">User Dashboard</th>
+      </tr>
     <tr>
       <td align="center">
         <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboard/profile-user.png?raw=true" alt="Landing page" style="width: 300px;"/>
@@ -153,9 +155,11 @@ An online judge platform hosting coding problems and challenges. Users solve a s
   </table>
 </div>
 
-#### Admin
 <div align="center">
   <table>
+     <tr>
+    <th align="center">Admin Dashboard</th>
+      </tr>
    <tr>
      <td align="center">
         <img src="https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/dark/dashboardadmin/problems.png?raw=true" alt="Landing register" style="width: 300px;"/>
