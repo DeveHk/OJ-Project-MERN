@@ -28,9 +28,14 @@ An online judge platform hosting coding problems and challenges. Users solve a s
   - zustand
 
 ## 🎨 Platform Visuals
-
-![Landing page](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/Landing.png?raw=true)
-![Landing regiser](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/dark-register.png?raw=true)
+### Default Website (Light Theme)
+![Landing page](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/Light/landing.png?raw=true)
+*Figure 1: Landing page*
+![Problems](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/Light/problems.png?raw=true)
+*Figure 2: Problems Page*
+![Problem](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/Light/problem-i.png?raw=true)
+![Problemtag](https://github.com/DeveHk/OJ-Project-MERN/blob/main/Assets/OJ/xl/Light/tags.png?raw=true)
+*Figure 3: Problem Page*
 
 ## 🔄 Workflow
 
