@@ -2,7 +2,7 @@
 
 An online judge platform hosting coding problems and challenges. Users solve a series of coding problems. First he has to begin with registration for his accound, user can register as admin or user(member). During problem solving, they submit their solutions through the platform. Once submitted, these solutions are evaluated against hidden test cases by the platform. Based on the results of these tests, user solution submission is assigned verdict. The platform provides the infrastructure to manage and execute the DSA coding problems, ensuring fair and impartial evaluation.
 ## 📽️ Watch Demo
-**Project working**: watch recording ▶️ [Link]([https://harshworks.publicvm.com](https://www.loom.com/share/e7c41b7c13264e098af3e1294d90facb?sid=2c6ce41d-6d4c-46c9-8540-598c8b66cb6d))
+**Project working**:  <a style="color: blue;" href="https://www.loom.com/share/e7c41b7c13264e098af3e1294d90facb?sid=2c6ce41d-6d4c-46c9-8540-598c8b66cb6d">watch recording ▶️ </a>
 ## 🌟 Features
 
 - **User Authentication and Role-Based Authorization**: Secure login and role-based access.
